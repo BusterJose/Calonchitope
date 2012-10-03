@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+	<p:fieldset styleClass="ui-state-hover" legend="Domicilio">
+			        <table>
+			        	<tr>
+			        	<td><h:outputText value="DEPARTAMENTO:"/></td>
+			        	<td><h:selectOneMenu value="#{enviarCVController.cv.cvDepartamento}">
+			        	<f:selectItems value="#{enviarCVController.listDept}" var="dep" itemLabel="#{dep.ubiDes}" itemValue="#{dep.ubiIdNiv1}"/>
+			       		<f:ajax listener="#{enviarCVController.actualizarProvs}" render="provs"/>
+			        	</h:selectOneMenu> </td>
+			        	</tr>
+			        	<tr>
+			        	<td><h:outputText value="PROVINCIA:"/></td>
+			        	<td><h:selectOneMenu id="provs" value="#{enviarCVController.cv.cvProvincia}">
+			        	<f:selectItem itemValue="0" itemLabel="Escoja una opcion"/>
+			        	<f:selectItems value="#{enviarCVController.listProv}" var="prov" itemLabel="#{prov.ubiDes}" itemValue="#{prov.ubiIdNiv2}"/>
+			        	<f:ajax listener="#{enviarCVController.actualizarDistritos}" render="distr"/>
+			        	</h:selectOneMenu> </td>
+			        	</tr>
+ 			        	<tr> 
+ 			        	<td><h:outputText value="DISTRITO:"/></td> 
+ 			        	<td><h:selectOneMenu id="distr" value="#{enviarCVController.cv.cvDistrito}"> 
+ 			        	<f:selectItem itemValue="0" itemLabel="Escoja una opcion"/>
+ 			        	<f:selectItems value="#{enviarCVController.listDist}" var="distrito" itemLabel="#{distrito.ubiDes}" itemValue="#{distrito.ubiId}"/>
+ 			        	</h:selectOneMenu> </td> 
+ 			        	</tr> 
+			        	<tr>
+			        	<td><h:outputText value="DOMICILIO:"/></td>
+			        	<td><p:inputText value="#{enviarCVController.cv.cvDomicilio}" style="width:200px"/> </td>
+			        	</tr>
+			        </table>
+	</p:fieldset>
+	</ui:composition>

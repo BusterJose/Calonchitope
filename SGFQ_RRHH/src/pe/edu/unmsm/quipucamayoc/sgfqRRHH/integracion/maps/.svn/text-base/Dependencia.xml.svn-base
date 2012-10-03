@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Dependencia">
+
+	<typeAlias alias="DependenciaDTO"
+		type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.DependenciaDTO" />
+
+	<resultMap id="rsDependencia" class="DependenciaDTO">
+		<result property="udId"   	columnIndex="1" />
+		<result property="udCod"	columnIndex="2" />
+		<result property="udDesc" 	columnIndex="3" />
+		<result property="udPad" 	columnIndex="4" />
+		<result property="udCalDep" columnIndex="5" />
+		<result property="udNivel"  columnIndex="6"/>
+	</resultMap>
+
+	<select id="getDependencia" resultMap="rsDependencia">
+		SELECT
+			ud.ud_id, ud.ud_cod, ud.ud_dsc, ud.ud_pad, ud.unidepcaldep , ud.NIVUNICOD
+		FROM
+			qprodataquipu.uni_dep ud
+		START WITH UD_ID = #udId# CONNECT BY PRIOR UD_ID=UD_PAD and ud_fec_cad is null
+		ORDER BY ud.ud_id
+	</select>
+	
+	<select id="getDependencia2" resultMap="rsDependencia">
+		SELECT
+			ud.ud_id, ud.ud_cod, ud.ud_dsc, ud.ud_pad, ud.unidepcaldep , ud.NIVUNICOD
+		FROM
+			qprodataquipu.uni_dep ud
+		START WITH UD_ID = #udId# CONNECT BY PRIOR UD_ID=UD_PAD and ud_fec_cad is null and ud.NIVUNICOD in (0,1,2)
+		ORDER BY ud.ud_id
+	</select>
+	
+	<select id="getDependenciaByUdPad" resultMap="rsDependencia" parameterClass="java.lang.Integer">
+		SELECT
+			ud.ud_id, ud.ud_cod, ud.ud_dsc, ud.ud_pad, ud.unidepcaldep
+		FROM
+			qprodataquipu.uni_dep ud
+		WHERE
+			ud.ud_fec_cad is null AND
+			ud.ud_pad = #value#
+		ORDER BY
+			ud.ud_cod
+	</select>
+	
+	<select id="obtenerud_cod" parameterClass="java.lang.Integer" resultMap="rsDependencia">
+		select ud.ud_id, ud.ud_cod, ud.ud_dsc, ud.ud_pad, ud.unidepcaldep , ud.NIVUNICOD 
+		from qprodataquipu.uni_dep ud where ud.ud_id = #udid# 
+	</select>
+	
+	<select id="depxudcod" parameterClass="java.util.Map"
+	 resultMap="rsDependencia">
+		    SELECT UD_ID,UD_COD,UD_DSC,UD_PAD,UNIDEPCALDEP, NIVUNICOD
+        FROM QPRODATAQUIPU.UNI_DEP
+           WHERE UD_COD = #udcod#  and ud_fec_cad is null
+		 
+	</select>
+</sqlMap>

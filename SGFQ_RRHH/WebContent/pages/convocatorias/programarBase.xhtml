@@ -1,0 +1,362 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/pages/pagePrincipal.xhtml">
+	
+	<ui:define name="title"> Programacion de Bases</ui:define>
+	<ui:define name="contenido" >
+	<f:view>
+	 
+		<h:form id="formProgramarBase" prependId="false" style="font-size: 10px;color:Dodgerblue">
+		<p:dialog visible="true" closable="true" widgetVar="dialogProgBases" header="Programacion de Bases" 
+		height="800" width="700" showEffect="puff" hideEffect="puff">
+		<p:messages id="msgs" showDetail="true"/>		
+		<p:tabView id="tvBases" activeIndex="#{programacionBaseController.tvProgBases}">
+		<p:tab id="tConvocatorias" title="Solicitud de Convocatorias Aprobadas DGA">
+		<p:panel id="pBases">
+			<ui:include src="/WEB-INF/componentes/listadoSolicitudConvProgBase.xhtml"/>
+		</p:panel>
+		</p:tab>
+		
+		<p:tab id="tGeneral" title="Generalidades" style="font-size: 12px">
+		<table style="color:Dodgerblue;border-color:#87CEFA; width:100%;border:2">
+		<tr> 
+		<td><h:outputText value="1. Objeto de la Convocatoria:"></h:outputText></td>
+		<td><h:outputText value="#{programacionBaseController.convDTO.objetivoConv}"> </h:outputText> </td>
+		</tr>
+		<tr>
+		<td><h:outputText value="2. Dependencia, unidad organica y/o area solicitante:"></h:outputText> </td>
+		<td><h:outputText value="#{programacionBaseController.convDTO.descDep}"></h:outputText> </td>
+		</tr>
+		<tr>
+		<td><h:outputText value="3. Dependencia encargada de realizar el proceso de contratacion:"></h:outputText> </td>
+		<td><h:outputText value="#{programacionBaseController.convDTO.descEstado}"></h:outputText> </td>
+		</tr>
+		</table>
+		<br></br>
+		<table style="width:100%"  >
+		<tr>
+		<td width="50%" align="center"><p:commandButton value="Editar Fechas Convocatoria" actionListener="#{programacionBaseController.irProgramarFechasConv}" update="tvBases,tGeneral"></p:commandButton></td>
+		<td width="50%" align="center"><p:commandButton value="Ver Detalle de Plazas" onclick="dialogEditPlaza.show()" update="dtPlazasConv,tvDetallePlazas,tPlazas"></p:commandButton></td>
+		</tr>
+		</table>
+		
+		</p:tab>		
+		
+		<p:tab id="tCronograma" title="Cronograma y Etapas del Proceso">
+		
+		<p:fieldset legend="Cronograma de Publicacion de Convocatoria" id="fsPubli">  
+		<table style="width:100%;cellpadding:5" >
+		<tr>
+		<td width="40%"><h:outputText value="Fecha Inicio Publicacion Convocatoria:"></h:outputText></td>
+		<td width="60%"><p:calendar id="fechaIni"  validatorMessage="Debe seleccionar Fechas" 
+        	value="#{programacionBaseController.convDTO.fechaIniPublicConv}" locale="es" navigator="true" 
+        	pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaIniPublicConv}" 
+        	onSelectUpdate="msgs"  onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}">
+        <p:watermark for="fechaIni" value="dd/mm/yyyy"></p:watermark>
+        </p:calendar></td>
+		</tr>
+		<tr>
+		<td><h:outputText value="Fecha Fin Publicacion Convocatoria:"></h:outputText></td>
+		<td><p:calendar id="fechaFin" value="#{programacionBaseController.convDTO.fechaFinPublicConv}" locale="es" navigator="true" 
+		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaFinPublicConv}" 
+		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}"> 
+		<p:watermark for="fechaFin" value="dd/mm/yyyy"></p:watermark>
+		</p:calendar>
+		</td>
+		</tr>
+		</table>
+    		
+		</p:fieldset> 
+		
+		<p:fieldset legend="Cronograma de Presentacion de Hoja de Vida">  
+		<table style="width:100%;cellpadding:5">
+		<tr>
+		<td width="40%"><h:outputText value="Fecha Inicio Presentacion CV:"></h:outputText></td>
+		<td width="60%"><p:calendar id="fechaIniCV" value="#{programacionBaseController.convDTO.fechaIniCV}" locale="es" navigator="true" 
+		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaIniCV}" 
+		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}"> 
+		 <p:watermark for="fechaIniCV" value="dd/mm/yyyy"/>
+		</p:calendar> </td>
+		</tr>
+		<tr>
+		<td><h:outputText value="Fecha Fin Presentacion CV:"></h:outputText></td>
+		<td><p:calendar id="fechaFinCV" value="#{programacionBaseController.convDTO.fechaFinCV}" locale="es" navigator="true" 
+		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaFinCV}" 
+		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}"> 
+		 <p:watermark for="fechaFinCV" value="dd/mm/yyyy"/>
+		</p:calendar></td>
+		</tr>
+		</table>    		  
+		</p:fieldset> 
+		
+		<p:fieldset legend="Cronograma de Evaluacion de Hoja de Vida">  
+    		
+    		<table style="width:100%;cellpadding:5">
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Inicio Evaluacion CV:"></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaEvalIniCV" value="#{programacionBaseController.convDTO.fechaIniEvalCV}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaIniEvalCV}" 
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}">
+    		<p:watermark for="fechaEvalIniCV" value="dd/mm/yyyy"/>
+    		</p:calendar></td>
+    		</tr>
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Fin Evaluacion CV:"></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaEvalFinCV" value="#{programacionBaseController.convDTO.fechaFinEvalCV}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaFinEvalCV}"
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}"> 
+    		<p:watermark for="fechaEvalFinCV" value="dd/mm/yyyy"/>
+    		</p:calendar></td>
+    		</tr>
+    		</table>
+		</p:fieldset> 
+		
+		<p:fieldset legend="Cronograma de Entrevista">  
+    		
+    		<table style="width:100%;cellpadding:5">
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Inicio Entrevista:"></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaIniEntre" value="#{programacionBaseController.convDTO.fechaIniEntrevista}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaIniEntrevista}" 
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}">
+    		<p:watermark for="fechaIniEntre" value="dd/mm/yyyy"/>
+    		</p:calendar></td>
+    		</tr>
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Fin Entrevista:"></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaFinEntre" value="#{programacionBaseController.convDTO.fechaFinEntrevista}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaFinEntrevista}" 
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}">
+    		<p:watermark for="fechaFinEntre" value="dd/mm/yyyy"/>
+    		</p:calendar> </td>
+    		</tr>
+    		</table>
+    		 
+		</p:fieldset> 
+		
+		<p:fieldset legend="Cronograma de Publicacion de Resultados">  
+    		<table style="width:100%;cellpadding:5">
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Inicio Publicacion de Resultados:"></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaIniPubl" value="#{programacionBaseController.convDTO.fechaIniPublicResult}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaIniPublicResult}" 
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}">
+    		<p:watermark for="fechaIniPubl" value="dd/mm/yyyy"/>
+    		</p:calendar></td>
+    		</tr>
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Fin Publicacion de Resultados"></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaFinPubl" value="#{programacionBaseController.convDTO.fechaFinPublicResult}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaFinPublicResult}" 
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}">
+    		<p:watermark for="fechaFinPubl" value="dd/mm/yyyy"/>
+    		</p:calendar></td>
+    		</tr>
+    		</table> 
+		</p:fieldset> 
+		
+		<p:fieldset legend="Cronograma de Suscripcion y Registro del Contrato">  
+    		
+    		<table style="width:100%;cellpadding:5">
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Inicio Suscripcion Contrato "></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaIniContrato" value="#{programacionBaseController.convDTO.fechaIniSuscripContrato}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaIniSuscripcion}" 
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}">
+    		<p:watermark for="fechaIniContrato" value="dd/mm/yyyy"/>
+    		</p:calendar></td>
+    		</tr>
+    		<tr>
+    		<td width="40%"><h:outputText value="Fecha Fin Suscripcion Contrato "></h:outputText></td>
+    		<td width="60%"><p:calendar id="fechaFinContrato" value="#{programacionBaseController.convDTO.fechaFinSuscripContrato}" locale="es" navigator="true" 
+    		pattern="dd/MM/yyyy" selectListener="#{programacionBaseController.validarFechaFinSuscripcion}" 
+    		onSelectUpdate="msgs" onSelectProcess="@this" mindate="#{programacionBaseController.fechaActual}"> </p:calendar></td>
+    		<p:watermark for="fechaFinContrato" value="dd/mm/yyyy"/>
+    		</tr>
+    		</table> 
+    		    		 
+		</p:fieldset>
+		<br></br>
+		<table style="width:100%;cellpadding:5">
+		<tr>
+		<td><p:commandButton value="Guardar/Modificar" onclick="dlgGuardar.show()" update="msgs"></p:commandButton></td>
+		<td><p:commandButton value="Enviar DGA" onclick="dlgEnviarDGA.show()"></p:commandButton></td>
+		<td><p:commandButton value="Devolver" onclick="dlgDevolverDGA.show()"></p:commandButton></td>
+		<td><p:commandButton value="Limpiar" onclick="dlgEliminar.show()"></p:commandButton></td>
+		</tr>
+		</table>
+				 
+		<p:confirmDialog widgetVar="dlgGuardar" message="¿Esta seguro de Guardar Fechas Etapas del Proceso Convocatoria?" header="Confirmacion de Datos">
+		<p:commandButton value="Aceptar" actionListener="#{programacionBaseController.guardarFechasEtapasProcesoConv}" 
+		oncomplete="dlgGuardar.hide()" onclick="dlgConfirmSave.show()" update="msgs"></p:commandButton>
+		<p:commandButton value="Cancelar" onclick="dlgGuardar.hide()"></p:commandButton>
+		</p:confirmDialog>
+		 
+		<p:confirmDialog widgetVar="dlgEliminar" message="¿Esta seguro de Eliminar Datos?" header="Confirmacion de Eliminar Datos" >
+				<p:commandButton value="Aceptar" actionListener="#{programacionBaseController.eliminarFechasEtapasProcesoConv}" 
+				oncomplete="dlgEliminar.hide()" onclick="dlgConfirmDelete.show()" update="tCronograma,tvBases,msgs" ajax="true"></p:commandButton> 
+		<p:commandButton value="Cancelar" onclick="dlgEliminar.hide()"></p:commandButton>		
+		</p:confirmDialog>
+		 
+		<p:confirmDialog widgetVar="dlgEnviarDGA" message="¿Esta seguro de Enviar Datos?" header="Confirmacion de Envio de Datos" >
+		<p:commandButton value="Aceptar" actionListener="#{programacionBaseController.enviarConvaDGA}" 
+				oncomplete="dlgEnviarDGA.hide()" update="tvBases,dtConvocatoria"></p:commandButton> 
+		<p:commandButton value="Cancelar" onclick="dlgEnviarDGA.hide()"></p:commandButton>		
+		</p:confirmDialog>
+		
+		<p:confirmDialog widgetVar="dlgDevolverDGA" message="Esta seguro de Devolver Convocatoria" header="Confirmacion de Devolver Convocatoria">
+		<p:commandButton value="Aceptar" actionListener="#{programacionBaseController.devolverConvaGestion}" 
+		oncomplete="dlgDevolverDGA.hide()" onclick="dlgConfirmDevolverDGA.show()" ></p:commandButton>
+		<p:commandButton value="Cancelar" onclick="dlgDevolverDGA.hide()"></p:commandButton>
+	    </p:confirmDialog>
+		
+		<p:confirmDialog widgetVar="dlgConfirmSave" message="Datos Guardados Exitosamente" header="Confirmando Guardado">
+		<p:commandButton value="Aceptar" onclick="dlgConfirmSave.hide()"  update="tCronograma,tvBases,msgs" ajax="true"></p:commandButton>
+		</p:confirmDialog>
+		
+		<p:confirmDialog widgetVar="dlgConfirmDelete" message="Datos Eliminados Exitosamente" header="Confirmando Eliminacion">
+		<p:commandButton value="Aceptar" onclick="dlgConfirmDelete.hide()"></p:commandButton>
+		</p:confirmDialog>
+		 
+		<p:confirmDialog widgetVar="dlgConfirmEnvio" message="Datos Enviados Exitosamente" header="Confirmando Envio">
+		<p:commandButton value="Aceptar" actionListener="#{programacionBaseController.iraTabBasesPrincipal}" 
+		oncomplete="dlgConfirmEnvio.hide()" update="tvBases,dtConvocatoria,tConvocatorias" ajax="true"></p:commandButton>
+		</p:confirmDialog>
+		
+		<p:confirmDialog widgetVar="dlgConfirmDevolverDGA" message="Datos Devueltos Exitosamente" header="Confirmando Devolver">
+		<p:commandButton value="Aceptar" actionListener="#{programacionBaseController.iraTabBasesPrincipal}"
+		onclick="dlgConfirmDevolverDGA.hide()" update="tvBases,dtConvocatoria,tConvocatorias" ajax="true"></p:commandButton>
+		</p:confirmDialog>
+		
+		</p:tab>
+		</p:tabView>
+		</p:dialog>
+		
+		
+		<p:dialog closable="true" widgetVar="dialogEditPlaza" header="Detalle de Plazas" height="500" width="600" 
+		showEffect="blind" hideEffect="blind">
+			<p:tabView id="tvDetallePlazas" activeIndex="#{programacionBaseController.tvDetallePlaza}">
+			<p:tab title="Plazas Solicitantes" id="tPlazas" >
+			<p:panel>
+			<p:dataTable id="dtPlazasConv" var="listPlazasConv" value="#{programacionBaseController.convDTO.listConvPlaza}" 
+			selection="#{programacionBaseController.convPlazaSelected}" rowSelectListener="#{programacionBaseController.editarPlazas}"
+			selectionMode="single" dblClickSelect="true" update="tPlazas, tvDetallePlazas" paginator="true" style="font-size: 12px;"  
+			rows="10" emptyMessage="No hay solicitudes pendientes de aprobar para este mes">
+			<f:facet name="header"><h:outputText value="Listado de Plazas"> </h:outputText> </f:facet>
+			<p:column>
+			<f:facet name="header"><h:outputText value="Nro"></h:outputText> </f:facet>
+			<h:outputText value="#{listPlazasConv.idPlaza}"></h:outputText>
+			</p:column>
+			<p:column>
+			<f:facet name="header"><h:outputText value="Plaza"></h:outputText> </f:facet>
+			<h:outputText value="#{listPlazasConv.descCargo}"></h:outputText>
+			</p:column>
+			<p:column>
+			<f:facet name="header"><h:outputText value="Periodo"></h:outputText> </f:facet>
+			<h:outputText value="#{listPlazasConv.periodo}"></h:outputText>
+			</p:column>
+			<p:column>
+			<f:facet name="header"><h:outputText value="Monto"></h:outputText> </f:facet>
+			<h:outputText value="#{listPlazasConv.monto}"> </h:outputText>
+			</p:column>				
+			</p:dataTable>
+			</p:panel>
+			</p:tab>
+			
+			<p:tab id="tEditarPlaza" title="Editar Plaza">		
+			
+			<p:tabView id="tvEditarPlaza" activeIndex="#{programacionBaseController.tvEditarPlaza}">
+			<p:tab id="tPerfil" title="Perfil del Puesto">		
+				<p:dataTable var="listRequisitos" value="#{programacionBaseController.convPlaza.listReqConvPlaza}">
+				<f:facet name="header"><h:outputText value="Requisitos de la Plaza"></h:outputText> </f:facet>
+				<p:column>
+				<f:facet name="header"><h:outputText value="REQUISITOS"></h:outputText> </f:facet>
+				<h:outputText value="#{listRequisitos.idRequisito}"></h:outputText>
+				</p:column>
+				<p:column>
+				<f:facet name="header"><h:outputText value="DETALLE"></h:outputText> </f:facet>
+				<h:outputText value="#{listRequisitos.descRequisito}"></h:outputText>
+				</p:column>
+				</p:dataTable>
+			<table style="width:100%;cellpadding:5">
+			<tr> 
+			<td align="right"><p:commandButton value="siguiente" actionListener="#{programacionBaseController.irSiguiente}" update="tvEditarPlaza,tPerfil"></p:commandButton></td>
+			</tr>
+			</table>			
+			</p:tab>
+			<p:tab id="tCaracteristicas" title="Caracteristicas del Puesto y/o Cargo">
+			<p:dataTable var="listServicios" value="#{programacionBaseController.convPlaza.listServConvPlaza}">
+			<f:facet name="header"><h:outputText value="Servicios de la Plaza"></h:outputText> </f:facet>
+			<p:column>
+			<f:facet name="header"><h:outputText value="SERVICIOS"></h:outputText> </f:facet>
+			<h:outputText value="#{listServicios.idServicio}"></h:outputText>
+			</p:column>
+			<p:column>
+			<f:facet name="header"><h:outputText value="DETALLES"></h:outputText> </f:facet>
+			<h:outputText value="#{listServicios.descServicio}"></h:outputText>
+			</p:column>
+			</p:dataTable>
+			<table style="width:100%;cellpadding:5">
+			<tr> 
+			<td align="left"><p:commandButton value="Atras" actionListener="#{programacionBaseController.irAtras}" update="tvEditarPlaza,tPerfil"></p:commandButton></td>
+			<td align="right"><p:commandButton value="siguiente" actionListener="#{programacionBaseController.irSiguiente}" update="tvEditarPlaza,tPerfil"></p:commandButton></td>
+			</tr>
+			</table>		
+			
+			</p:tab>
+			<p:tab id="tCondiciones" title="Condiciones Esenciales del Contrato">
+				<table style="width:100%;cellpadding:5;border:1">
+				<tr>
+				<th>CONDICIONES</th>
+				<th>DETALLE</th>
+				</tr>
+				<tr> 
+				<td>Lugar de prestacion del Servicio</td>
+				<td><h:outputText value="#{programacionBaseController.convPlaza.descDep}"></h:outputText> </td>
+				</tr>
+				<tr>
+				<td>Duracion del Contrato</td>
+				<td>
+					<h:outputText value="Inicio Contrato " />
+					<p:calendar navigator="true" value="#{programacionBaseController.convPlaza.fechaIni}" locale="es" pattern="dd/MM/yyyy" ></p:calendar>
+				<!-- <h:outputText  value="#{programacionBaseController.convPlaza.periodo}"/> -->
+				</td>
+				</tr>
+				<tr>	
+				<td colspan="1"></td>
+				<td>
+					<h:outputText value="Fin Contrato " />
+					<p:calendar navigator="true" value="#{programacionBaseController.convPlaza.fechaFin}" locale="es" pattern="dd/MM/yyyy" mindate="#{programacionBaseController.convPlaza.fechaIni}"></p:calendar>
+					<p:commandButton image="ui-icon-disk" title="Actualizar" action="#{programacionBaseController.actualizarFechaContratos}" update="notificacionProgBase" />
+				</td>
+				</tr>
+				<tr>
+				<td>Remuneracion Mensual</td>
+				<td>S/. <h:outputText value="#{programacionBaseController.convPlaza.monto}"></h:outputText> Nuevos Soles 
+				Incluye los montos y afiliaciones de ley, asi como toda deduccion aplicable al trabajador</td>
+				</tr>
+				<tr> 
+				<td>Otras condiciones esenciales del Contrato</td>
+				<td> </td>
+				</tr>
+				</table>
+				
+				<table style="width:100%">
+				<tr> 
+				<td align="left"><p:commandButton value="Atras" actionListener="#{programacionBaseController.irAtras}" update="tvEditarPlaza,tCondiciones"></p:commandButton></td>
+				</tr>		
+				</table>
+			</p:tab>
+			</p:tabView>
+			</p:tab>
+			</p:tabView>
+		</p:dialog>
+			<p:growl id="notificacionProgBase" showDetail="true" life="3000"></p:growl>
+		</h:form>
+	</f:view>
+	</ui:define>
+</ui:composition>
+		

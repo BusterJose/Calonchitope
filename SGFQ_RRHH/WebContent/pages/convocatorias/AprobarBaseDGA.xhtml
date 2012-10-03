@@ -1,0 +1,209 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/pages/plantilla.xhtml">
+
+	<ui:define name="title"> Aprobar Base de Convocatoria </ui:define>
+	<ui:define name="contenido">
+		<f:view>
+			<h:form prependId="false">
+				<p:panel id="pnAprBaseConv"
+					header="Aprobar Base de Convocatoria"
+					style="font-size: 12px; width:800px; height:620px; overflow:auto" closable="true">
+						<table width="775px">
+							<tr>
+								<td colspan="4">
+									<p:tabView id="tvConvocatorias" style="font-size: 12px; width:760px; height:570px" activeIndex="#{convocatoriaController.tabActivo}">
+										<p:tab title="Listado">
+											<table>
+												<tr>
+													<td align="right" width="750px">
+														Año:
+														<h:selectOneMenu id="soAnio" style="width:80px"
+																	value="#{convocatoriaController.anio}"
+																	validatorMessage="Seleccione una opción">
+																<f:selectItems value="#{convocatoriaController.listAnioSI}" />
+																<p:ajax update="tvConvocatorias"  event="change" 
+																actionListener="#{convocatoriaController.listarConvocatoriasAnioMes}" />
+													    </h:selectOneMenu>
+														Mes:
+														<h:selectOneMenu id="soMes" style="width:130px"
+																	value="#{convocatoriaController.mes}"
+																	validatorMessage="Seleccione una opción">
+																<f:selectItems value="#{convocatoriaController.listMesSI}" />
+																<p:ajax update="tvConvocatorias"  event="change" 
+																actionListener="#{convocatoriaController.listarConvocatoriasAnioMes}" />
+													    </h:selectOneMenu>
+													</td>
+												</tr><tr/><tr/><tr/><tr/><tr/>
+											</table>
+											<p:dataTable id="dtConvocatorias" var="rowConvocatorias" value="#{convocatoriaController.listConvocatorias}" update="tvConvocatorias"
+												paginator="true" style="font-size: 12px;"  rows="10" emptyMessage="No hay solicitudes pendientes de aprobar para este mes"
+												selection="#{convocatoriaController.convocatoriaSelect}"
+												selectionMode="single" dblClickSelect="true"
+												rowSelectListener="#{convocatoriaController.seleccionarConvocatoria}">
+												
+												<f:facet name="header">
+										        LISTADO DE SOLICITUDES
+										        </f:facet>
+										  
+										        <p:column style="width:10px; text-align:center">
+													<f:facet name="header">Nro.</f:facet>
+													<h:outputText value="#{rowConvocatorias.idConvocatoria}"/>
+												</p:column>
+												
+												<p:column style="width:400px">
+													<f:facet name="header">Objetivo</f:facet>
+													<h:outputText value="#{rowConvocatorias.objetivoConv}" />
+												</p:column>
+												
+												<p:column style="width:80px">
+													<f:facet name="header">Codigo Dep.</f:facet>
+													<h:outputText value="#{rowConvocatorias.codDep}" />
+												</p:column>
+												
+												<p:column style="width:365px">
+													<f:facet name="header">Dependencia</f:facet>
+													<h:outputText value="#{rowConvocatorias.descDep}" />
+												</p:column>
+												
+											</p:dataTable>
+										</p:tab>
+										<p:tab title="Detalle">
+											<table width="740px">
+												<tr/>
+												<tr>
+													<td colspan="8">
+														<p:fieldset legend="Datos Principales" style="font-size: 12px; width:692px">
+															<table width="100%">
+																<tr >
+																	<td/>
+																	<td align="right">
+																		Nro. Solicitud:
+																		<p:inputText value="#{convocatoriaController.convocatoriaSelect.idConvocatoria}" disabled="true" style="width:35px"/>
+																	</td>
+																</tr>
+																<tr>
+																	<td align="right">Dependencia: </td>
+																	<td align="left">
+																		<p:inputText value="#{convocatoriaController.convocatoriaSelect.descDep}" disabled="true" style="width:584px"/>
+																	</td>
+																</tr>
+																<tr>
+																	<td align="right">Objetivo: </td>
+																	<td align="left">
+																		<p:inputText value="#{convocatoriaController.convocatoriaSelect.objetivoConv}" disabled="true" style="width:584px"/>
+																	</td>
+																</tr>
+															</table>
+														</p:fieldset>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="8">
+														<p:fieldset legend="Fechas Programadas" style="font-size: 12px; width:692px">
+														<table>
+															<tr>
+																<td align="right"> Periodo de Publicación:</td>
+																<td align="left">
+																	<p:inputText value="#{convocatoriaController.convocatoriaSelect.periodoPublicConv}" disabled="true" style="width:165px"/>
+																</td>
+															</tr>
+															<tr>
+																<td align="right"> Presentación de Curriculum Vitae:</td>
+																<td align="left">
+																	<p:inputText value="#{convocatoriaController.convocatoriaSelect.periodoCV}" disabled="true" style="width:165px"/>
+																</td>
+															</tr>
+															<tr>
+																<td align="right"> Evaluación de Curriculum Vitae:</td>
+																<td align="left">
+																	<p:inputText value="#{convocatoriaController.convocatoriaSelect.periodoEvalCV}" disabled="true" style="width:165px"/>
+																</td>
+															</tr>
+															<tr>
+																<td align="right"> Entrevistas:</td>
+																<td align="left">
+																	<p:inputText value="#{convocatoriaController.convocatoriaSelect.periodoEntrevista}" disabled="true" style="width:165px"/>
+																</td>
+															</tr>
+															<tr>
+																<td align="right"> Publicación de Resultados:</td>
+																<td align="left">
+																	<p:inputText value="#{convocatoriaController.convocatoriaSelect.periodoPublicResult}" disabled="true" style="width:165px"/>
+																</td>
+															</tr>
+															<tr>
+																<td align="right"> Suscripción de Contratos:</td>
+																<td align="left">
+																	<p:inputText value="#{convocatoriaController.convocatoriaSelect.periodoSuscripContrato}" disabled="true" style="width:165px"/>
+																</td>
+															</tr>
+														</table>
+														</p:fieldset>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="8">
+														<p:fieldset legend="Plazas Solicitadas" style="font-size: 12px; width:692px">
+														<p:dataTable id="dtPlazasConv" var="rowPlazas"
+															value="#{convocatoriaController.convocatoriaSelect.listConvPlaza}" update="tvConvocatorias"
+															style="font-size: 12px; width:689px"  rows="10">
+															
+															<p:column style="width:10px; text-align:center">
+																<f:facet name="header">Nro</f:facet>
+																<h:outputText value="#{rowPlazas.idPlaza}"/>
+															</p:column>
+															
+															<p:column style="width:400px">
+																<f:facet name="header">Plaza</f:facet>
+																<h:outputText value="#{rowPlazas.descCargo}"/>
+															</p:column>
+															
+															<p:column style="width:250px; text-align:center">
+																<f:facet name="header">Periodo</f:facet>
+																<h:outputText value="#{rowPlazas.periodo}"/>
+															</p:column>
+															
+															<p:column style="width:80px">
+																<f:facet name="header">Monto</f:facet>
+																<h:outputText value="#{rowPlazas.monto}"/>
+															</p:column>
+														</p:dataTable>
+														</p:fieldset>
+													</td>
+												</tr><tr/><tr/><tr/><tr/>
+												<tr>
+													<td colspan="8">
+														<div id="footer" class="ui-widget ui-widget-header ui-corner-all" align="center" style="height: 38px; width: 718px">
+															<br style="font-size: 3px"/>
+															<p:commandButton value="Aprobar" actionListener="#{convocatoriaController.aprobarDGABaseConvocatoria}"
+																oncomplete="ConfirmacionAprobar.show()" style="width:110px" image="ui-icon ui-icon-check"  update="tvConvocatorias"/>
+															<p:commandButton value="Desaprobar" actionListener="#{convocatoriaController.desaprobarDGAConvocatoria}"
+																oncomplete="ConfirmacionDesaprobar.show()" style="width:110px" image="ui-icon ui-icon-closethick" update="tvConvocatorias"/>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</p:tab>
+									</p:tabView>
+								</td>
+							</tr>
+						</table>
+						
+						<p:confirmDialog header="Confirmacion" message="Las Bases de la Convocatoria han sido Aprobadas y Publicadas en la Pagina Web"
+									widgetVar="ConfirmacionAprobar" severity="alert">
+							<p:commandButton value="Aceptar" onclick="ConfirmacionAprobar.hide()"/>
+						</p:confirmDialog>
+        				<p:confirmDialog header="Confirmacion" message="Las Bases de la Convocatoria han sido Desaprobadas y Devueltas a la Oficina Gral. de Recursos Humanos"
+									widgetVar="ConfirmacionDesaprobar" severity="alert">
+							<p:commandButton value="Aceptar" onclick="ConfirmacionDesaprobar.hide()"/>
+						</p:confirmDialog>
+						
+				</p:panel>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/pages/plantilla.xhtml">
+	
+	<ui:define name="title"> Solicitud de Convocatorias</ui:define>
+	<ui:define name="contenido" >
+	<f:view>
+		<h:form prependId="false" style="font-size: 10px">
+		<h:outputText value="bienvenido al sistema de gestion financiera quipucamayoc"/>
+ 		</h:form>
+ 		</f:view>
+	</ui:define>
+</ui:composition>

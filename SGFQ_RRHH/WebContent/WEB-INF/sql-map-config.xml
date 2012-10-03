@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		useStatementNamespaces="true" maxSessions="64" maxTransactions="8"
+		maxRequests="128" />
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Dependencia.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Cargo.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Plaza.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/PlazaServidor.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Convocatoria.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/ConvocatoriaPlaza.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/RequisitoConvPlaza.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/ServicioConvPlaza.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/TipoRequisitoConvPlaza.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/CurriculumVitae.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/CVExpLab.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/CVGradAcad.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Ubigeo.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Nacionalidad.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Servidor.xml"/>
+	<sqlMap resource="pe/edu/unmsm/quipucamayoc/sgfqRRHH/integracion/maps/Reportes.xml"/>
+</sqlMapConfig>

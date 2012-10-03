@@ -1,0 +1,317 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/pages/plantilla.xhtml">
+	
+	<ui:define name="title"> Solicitud de Convocatorias</ui:define>
+	<ui:define name="contenido" >
+	<f:view>
+		<h:form prependId="false" style="font-size: 10px">
+				<p:dialog header="Solicitud de Convocatorias" widgetVar="dlg1" visible="true" height="600" width="850" >  
+					 <p:tabView id="tabLista" activeIndex="#{envioSolicitudController.tabViewtabLista}"> 
+						 <p:tab title="Plazas Vacantes" id="tabPlazasVacantes">
+								<h:commandButton actionListener="#{listasController.cargarArbol}"  
+						 		value="Escojer Depdencia" onclick="dlgdep.show();" >
+						 		<f:ajax render="paneltree" />
+						 		</h:commandButton><h:outputText id="otDep" value="#{envioSolicitudController.depSeleccionada.udDesc}"/>
+							 <p:dataTable id="tablePlazaVac" var="listplazas" value="#{envioSolicitudController.listPlazasVacantes}"
+							  selection="#{envioSolicitudController.listaPlazasdtosSelected}" update="plazasSelectas" emptyMessage="No hay ninguna plaza vacante libre"> 
+							 <f:facet name="header"> <h:outputText value="Listado Plazas Vacantes"> </h:outputText> </f:facet>
+								 <p:column >
+								  <f:facet name="header">
+									<h:outputText value="Dependencia" />  
+								  </f:facet>
+									<h:outputText value="#{listplazas.descDep}" />
+								 </p:column>						 
+								 <p:column>
+								 <f:facet name="header">
+								 <h:outputText value="Plaza"> </h:outputText>
+								 </f:facet>
+								 <h:outputText value="#{listplazas.descCargo}"> </h:outputText>
+								 </p:column>						 
+								 <p:column > 
+								 <f:facet name="header">
+								 <h:outputText value="Monto"> </h:outputText>
+								 </f:facet>
+								 <h:outputText value="#{listplazas.monto}"></h:outputText>
+								 </p:column>
+								 <p:column selectionMode="multiple"> </p:column>
+							</p:dataTable>
+								<br></br>
+							 <p:commandButton value="Crear Solicitud" image="ui-icon-plusthick" actionListener="#{envioSolicitudController.crearSolicitud}" update="tabLista,tabCrearSolicitud"></p:commandButton>
+						 </p:tab>
+						 
+						<p:tab title="Crear Solicitud" id="tabCrearSolicitud">
+							<p:wizard widgetVar="wiz" flowListener="#{envioSolicitudController.onFlowProcess}" style="font-size:12px;" >  
+							      
+							        <p:tab id="paso1" title="Datos Convocatoria"> 
+							        <p:panel header="Ingresando Datos Generales de Convocatoria" style="font-size:12px;height:200px;" >  
+							                 <table> 
+							                   <tr> 
+							                   <td> <h:outputText value="Seleccione Dependencia:"></h:outputText></td>
+							                   <td> <p:inputText id="iddep" value="#{envioSolicitudController.convDTO.descDep}" style="width:400px"></p:inputText></td>
+							                   <td> <p:message for="iddep" display="text" /> </td>
+							                   </tr>
+							                   <tr>
+							                   <td> <h:outputText value="Objeto de la Convocatoria:"> </h:outputText> </td>
+							                   <td> <p:inputText id="obj" value="#{envioSolicitudController.convDTO.objetivoConv}" style="width:400px"> </p:inputText> </td>
+							                   <td><p:message for="obj" display="text"> </p:message> </td>
+							                   </tr>					                   
+							                   </table>
+							          </p:panel>  
+							        </p:tab>  
+							         <p:tab id="paso2" title="Plazas" >  
+							         <p:tabView id="tabViewSolicitud" dynamic="true" activeIndex="#{envioSolicitudController.tabVieWindex}">
+							         <p:tab id="tablePlazas" title="Plazas Selectas">
+							         <p:dataTable id="plazasSelectas" var="listplazasSelectas" value="#{envioSolicitudController.listaPlazasdtosSelected}"
+							         selection="#{envioSolicitudController.plazaSelected}" rowSelectListener="#{envioSolicitudController.seleccionarPlaza}" 
+							         selectionMode="single" dblClickSelect="true" update="tabViewSolicitud,tableServicios" >
+							         <f:facet name="header"> <h:outputText value="Listado Plazas Vacantes"> </h:outputText> </f:facet>
+											<p:column >
+											  <f:facet name="header">
+												<h:outputText value="Dependencia" />  
+											  </f:facet>
+												<h:outputText value="#{listplazasSelectas.descDep}" />
+								 			</p:column>									 
+											 <p:column >
+											  <f:facet name="header">
+												<h:outputText value="Descripcion" />  
+											  </f:facet>
+												<h:outputText value="#{listplazasSelectas.descCargo}" />
+											 </p:column>
+											 <p:column> 
+											 <f:facet name="header">
+											 <h:outputText value="Monto"> </h:outputText>
+											 </f:facet>
+											 <h:outputText value="#{listplazasSelectas.monto}"></h:outputText>
+											</p:column>	
+																		 					         
+							          </p:dataTable>					         
+							         </p:tab>					         
+							         <p:tab id="ModPlazas" title="Registrar/Modificar Perfil"> 
+							         				<table>
+									                  	<tr>
+									                  	<td><h:outputText value="Monto"> </h:outputText> </td>
+									                  	<td><h:outputText id="monto" value="#{envioSolicitudController.plaza.monto}"/></td>
+									                  	<td><p:message for="monto"  display="true"></p:message> </td>
+									                  	</tr>
+									                   	<tr>                    
+									                    <td>  <h:outputText value="Fecha Inicio:">  </h:outputText> </td>
+									                    <td>  <p:calendar id="fechaIni" value="#{envioSolicitudController.convPlaza.fechaIni}"
+									                    mindate="#{envioSolicitudController.fechaActual}" locale="es" navigator="true" pattern="dd/MM/yyyy">
+									                    <p:watermark for="fechaIni" value="dd/mm/yyyy" />
+									                    </p:calendar></td>
+									                    <td><p:message for="fechaIni" display="true"></p:message> </td>
+									                    </tr>
+									                    <tr> 
+									                     <td>  <h:outputText value="Fecha Fin:">  </h:outputText> </td>
+									                    <td>  <p:calendar id="fechaFin" value="#{envioSolicitudController.convPlaza.fechaFin}" 
+									                    mindate="#{envioSolicitudController.fechaActual}" locale="es" navigator="true" pattern="dd/MM/yyyy">
+									                    	<p:watermark for="fechaFin" value="dd/mm/yyyy" />
+									                    </p:calendar></td>
+									                    <td><p:message for="fechaFin" display="true"> </p:message> </td>
+									                   </tr>
+									                   <tr></tr>							                   
+									  				</table>
+									  <br> </br>							  
+									  	<p:accordionPanel autoHeight="false">
+									  	<p:tab title="Funciones y Competencias">
+									  	<p:fieldset id="fsFunciones" legend="Ingreso de Funciones y Competencias" toggleable="true">
+							         	<table>	
+							         			<tr>
+							         			<td> <h:outputText value="Ingresar Funcion a Realizar:">  </h:outputText> </td>
+							                    <td> <p:inputTextarea id="textservicio" value="#{envioSolicitudController.servConvPlaza.descServicio}" style="width:300px;height:30px"> </p:inputTextarea> </td>
+							                    <td> <p:message for="textservicio" display="true"></p:message> </td>
+							                    <td> <p:commandButton value="Agregar" image="ui-icon-plusthick" actionListener="#{envioSolicitudController.agregarServiciosConvPlaza}" update="tableServicios,textservicio"> </p:commandButton> </td>
+							                    
+							                    </tr>					         
+							        	 </table>
+							            <br></br>
+							            <p:dataTable id="tableServicios" var="listaServicios" value="#{envioSolicitudController.convPlaza.listServConvPlaza}"
+							            emptyMessage="No hay descripciones de Servicios">
+							                 <p:column>
+							                    <f:facet name="header"><h:outputText value="ID Servicio"></h:outputText> </f:facet>
+							                    <h:outputText value="#{listaServicios.idServicio}"></h:outputText>
+							                    </p:column>					                     					                    
+							                    <p:column>
+							                     <f:facet name="header"> <h:outputText value="Detalle Servicio"></h:outputText> </f:facet>
+							                     <p:cellEditor>
+												        <f:facet name="output">
+												            <h:outputText value="#{listaServicios.descServicio}" style="width:100%"/>
+												        </f:facet>
+												        <f:facet name="input">    
+												            <p:inputText id ="name" value="#{listaServicios.descServicio}" style="width:100%; text-align:left"/>
+												        </f:facet>
+												 </p:cellEditor>
+												 </p:column>					                    
+							                    <p:column headerText="Mod" styleClass="ui-editable-column-options" style="width:40px; text-align:center">    
+												   	<p:rowEditor style="text-align:center"/>
+												</p:column>										
+												<p:column headerText="Elim" style="text-align: center">
+													<p:commandLink action="#{envioSolicitudController.eliminarServicios}" ajax="true"
+														update="tableServicios,fsFunciones"	style="text-align:center">  
+														<span class="ui-icon ui-icon-close"></span>
+														<f:setPropertyActionListener value="#{listaServicios}" target="#{envioSolicitudController.servConvPlazaElim}"/>
+												   	</p:commandLink>
+												</p:column>					                    
+							                 </p:dataTable>
+							         	</p:fieldset>
+									  	
+									  	</p:tab>
+									  	<p:tab title="Requisitos Minimos">
+									  		<p:fieldset id="fsRequisitos" legend="Ingreso de Requisitos Minimos del Perfil" toggleable="true">
+								         	 <table>
+								  			      <tr>
+								  			      <td><h:outputText value="Tipo Requisito:"></h:outputText> </td>
+								  			      <td> 
+								  			      <h:selectOneMenu id="soTipoRequisito" validatorMessage="Seleccione Una Opcion" 
+								  			      value="#{envioSolicitudController.requiConvPlaza.idTipoRequisito}"> 
+								  			      <f:selectItems value="#{envioSolicitudController.listTipoRequiSI}" var="tipReq" itemLabel="#{tipReq.descTipoRequisito}" itemValue="#{tipReq.idTipoRequisito}"></f:selectItems>
+								  			      </h:selectOneMenu>
+								  			      </td> 
+								  			      </tr>
+								                  <tr>                    
+								                    <td> <h:outputText value="Ingresar Requisito:">  </h:outputText> </td>
+								                    <td> <p:inputTextarea id="textrequisito" value="#{envioSolicitudController.requiConvPlaza.descRequisito}" style="width:300px;height:30px" > </p:inputTextarea> </td>
+								                    <td><p:message for="textrequisito" display="true"></p:message> </td>
+								                    <td> <p:commandButton value="Agregar" image="ui-icon-plusthick" actionListener="#{envioSolicitudController.agregarRequisitosConvPlaza}" update="tableRequisitos,textrequisito" > </p:commandButton> </td>
+								                    </tr>
+								               </table>
+							               <br> </br>
+							                    <p:dataTable id="tableRequisitos" var="listaRequisitos" value="#{envioSolicitudController.convPlaza.listReqConvPlaza}"
+							                    emptyMessage="No hay descripciones de Requisitos">
+							                    <p:column>
+							                    <f:facet name="header"><h:outputText value="ID Requisito"></h:outputText> </f:facet>
+							                    <h:outputText value="#{listaRequisitos.idRequisito}"></h:outputText>
+							                    </p:column>					                    
+							                    <p:column>
+							                     <f:facet name="header"> <h:outputText value="Detalle Requisito"></h:outputText> </f:facet>
+							                      <p:cellEditor>
+												        <f:facet name="output">
+												            <h:outputText value="#{listaRequisitos.descRequisito}" style="width:100%"/>
+												        </f:facet>
+												        <f:facet name="input">    
+												            <p:inputText id ="name" value="#{listaRequisitos.descRequisito}" style="width:100%; text-align:left"/>
+												        </f:facet>
+												 </p:cellEditor>
+							                    </p:column>
+							                    
+							                    <p:column headerText="Mod" styleClass="ui-editable-column-options" style="width:40px; text-align:center">    
+												   	<p:rowEditor style="text-align:center"/>
+												</p:column>
+												
+												<p:column headerText="Elim" style="text-align: center">
+													<p:commandLink action="#{envioSolicitudController.eliminarRequisitos}" ajax="true"
+														update="tableRequisitos,fsRequisitos"	style="text-align:center">  
+														<span class="ui-icon ui-icon-close"></span>
+														<f:setPropertyActionListener value="#{listaRequisitos}" target="#{envioSolicitudController.requiConvPlazaElim}"/>
+												   	</p:commandLink>
+												</p:column>
+							               </p:dataTable>
+							         	</p:fieldset>
+									  	
+									  	</p:tab>
+									  	  
+									  	</p:accordionPanel>
+							         	
+							         	<br></br>
+							         						            					       				        
+							        					          
+							          <br> </br>
+							          <p:commandButton value="#{envioSolicitudController.strButtonAction}" image="ui-icon-disk" onclick="confirmacionGuardarPlaza.show()" type="button" ></p:commandButton>
+							          <p:commandButton value="Cancelar" image="ui-icon-close"  actionListener="#{envioSolicitudController.cancelarDatosPlaza}"> </p:commandButton>
+							          <p:commandButton value="Limpiar" image="ui-icon-clipboard" actionListener="#{envioSolicitudController.limpiarDatos}" update="monto,fechaIni,fechaFin,tableServicios,tableRequisitos"></p:commandButton>
+							         
+							          <p:confirmDialog header="Confirmacion de Guardar Plazas" message="¿Esta seguro de Guardar Plaza?" widgetVar="confirmacionGuardarPlaza"
+							          showEffect="bounce" hideEffect="explode"  >
+							          <p:commandButton value="Aceptar" image="ui-icon-check" actionListener="#{envioSolicitudController.guardarPlazaConv}"  oncomplete="confirmacionGuardarPlaza.hide()" 
+							          onclick="plazaGuardada.show()"></p:commandButton>
+							          <p:commandButton value="Cancelar" image="ui-icon-close"  onclick="confirmacionGuardarPlaza.hide()"></p:commandButton>
+							          </p:confirmDialog>
+							          <p:confirmDialog header="Guardando Plaza..." message="Plaza Guardada Correctamente" widgetVar="plazaGuardada">
+							          <p:commandButton value="Aceptar" image="ui-icon-check" actionListener="#{envioSolicitudController.confirmacionPlazasGuardadas}" onclick="plazaGuardada.hide()" update="tabViewSolicitud,ModPlazas"></p:commandButton>
+							          </p:confirmDialog>
+							          
+							       </p:tab>
+							       </p:tabView>
+							</p:tab>
+							
+							 <p:tab id="paso5" title="Confirmacion">  
+							  
+							            <p:panel id="funciona" header="Confirmando Datos">  
+							              <table>
+							              <tr align="center"> 
+							              <td align="center" colspan="2"> 
+							              <h:outputLabel value="Universidad Nacional Mayor de San Marcos" style="right:100px; top:0px;"></h:outputLabel>
+							              </td>
+							              </tr>
+							              <tr> 
+							              <td><h:outputText value="Dependencia:"></h:outputText> </td>
+							              <td><h:outputText value="#{envioSolicitudController.convDTO.descDep}"></h:outputText> </td>
+							              </tr>
+							              <tr> 
+							              <td><h:outputText value="Objetivo:"></h:outputText> </td>
+							              <td><h:outputText value="#{envioSolicitudController.convDTO.objetivoConv}"> </h:outputText> </td>
+							              </tr>					              					              
+							              </table>				              		               		              
+		
+							                <p:dataList var="plazas" value="#{envioSolicitudController.convDTO.listConvPlaza}">
+											    <ui:include src="/WEB-INF/componentes/detallePlazasComponente.xhtml"></ui:include>
+											</p:dataList>
+											
+							            	  <p:commandButton value="Guardar" image="ui-icon-disk" onclick="confirmacionGuardaSolicitudConv.show()"> </p:commandButton> 
+							                  <p:commandButton value="Enviar Solicitud" image="ui-icon-mail-closed" onclick="confirmacionEnvioSolicitud.show()"></p:commandButton>
+							                 
+							                  
+							                  <p:confirmDialog header="Confirmacion de Guardar Solicitud Convocatoria" message="¿Esta seguro de Guardar esta Solicitud Convocatoria?"
+							                    widgetVar="confirmacionGuardaSolicitudConv" hideEffect="explode" showEffect="bounce">
+							                  <p:commandButton value="Aceptar" image="ui-icon-check" actionListener="#{envioSolicitudController.guardarConvocatoria}" oncomplete="confirmacionGuardaSolicitudConv.hide(),guardarSolicitud.show()"></p:commandButton>
+							                  <p:commandButton value="Cancelar" image="ui-icon-close" onclick="confirmacionGuardaSolicitudConv.hide()"></p:commandButton>
+							                  </p:confirmDialog>
+							                  
+							                  <p:confirmDialog header="Guardando Solicitud Convocatoria..." message="Solicitud de Convocatoria Guardada Satisfactoriamente" widgetVar="guardarSolicitud">
+							                  <p:commandButton value="Aceptar" image="ui-icon-check" onclick="guardarSolicitud.hide()" update="tabLista"></p:commandButton>
+							                  </p:confirmDialog>					                  
+							      
+							                  <p:confirmDialog header="Confirmacion de Envio Solicitud " message="¿Esta seguro de Enviar esta Solicitud Convocatoria?"
+							                  widgetVar="confirmacionEnvioSolicitud" hideEffect="explode" showEffect="bounce">
+							                  <p:commandButton value="Aceptar" image="ui-icon-check" actionListener="#{envioSolicitudController.enviarSolicitudConv}" oncomplete="confirmacionEnvioSolicitud.hide(),enviaSolicitud.show()"
+							                  update="tabLista,tablePlazaVac,tabPlazasVacantes"></p:commandButton>
+							                  <p:commandButton value="Cancelar" image="ui-icon-close" onclick="confirmacionEnvioSolicitud.hide()"></p:commandButton>
+							                  </p:confirmDialog>
+							                  
+							                  <p:confirmDialog header="Enviando Solicitud Convocatoria..." message="Solicitud de Convocatoria Enviada Satisfactoriamente" widgetVar="enviaSolicitud">
+							                  <p:commandButton value="Aceptar" image="ui-icon-check" onclick="enviaSolicitud.hide()"></p:commandButton>
+							                  
+							                  </p:confirmDialog>
+							                
+							               </p:panel>  
+							   </p:tab>
+							 </p:wizard>  
+						</p:tab>
+		
+					 </p:tabView>
+
+				</p:dialog>	
+				
+				<p:dialog id="iddlgDep" header="Seleccionar Dependencia" widgetVar="dlgdep" width="630" 
+				height="425" visible="#{listasController.mostrarDependencia}">
+								        <p:panel id="paneltree" style="font-size: 12px; width:600px; height:300px; overflow:auto">
+											<p:tree value="#{listasController.root}" var="node" 
+											nodeSelectListener="#{envioSolicitudController.onNodeSelect}"
+							        				selectionMode="single" selection="#{envioSolicitudController.selectedNode}">
+										        <p:treeNode>
+										            <h:outputText value="#{node.udDesc}" />
+										        </p:treeNode>
+										    </p:tree>
+										</p:panel>
+										<br/>
+								        <p:commandButton value="Seleccionar Dependencia" update="otDep"
+										        style="margin:20px 0 20px 0;" oncomplete="dlgdep.hide();"/>
+				</p:dialog>			
+ 		</h:form>
+ 		</f:view>
+	</ui:define>
+</ui:composition>

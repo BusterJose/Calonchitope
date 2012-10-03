@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	>
+						<table>
+							<tr>
+								<td align="right" width="750px">
+									Anio:
+									<h:selectOneMenu id="soAnio" style="width:80px"
+												value="#{convocatoriaController.anio}"
+												validatorMessage="Seleccione una opcion">
+											<f:selectItems value="#{convocatoriaController.listAnioSI}" />
+											<p:ajax update="tvConvocatorias"  event="change" 
+											actionListener="#{convocatoriaController.listarConvocatoriasAnioMes}" />
+								    </h:selectOneMenu>
+									Mes:
+									<h:selectOneMenu id="soMes" style="width:130px"
+												value="#{convocatoriaController.mes}"
+												validatorMessage="Seleccione una opcion">
+											<f:selectItems value="#{convocatoriaController.listMesSI}" />
+											<p:ajax update="tvConvocatorias"  event="change" 
+											actionListener="#{convocatoriaController.listarConvocatoriasAnioMes}" />
+								    </h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+						<p:dataTable id="dtConvocatorias" var="rowConvocatorias" value="#{convocatoriaController.listConvocatorias}" update="tvConvocatorias"
+							paginator="true" style="font-size: 12px;"  rows="10" emptyMessage="No hay solicitudes pendientes de aprobar para este mes"
+							selection="#{convocatoriaController.convocatoriaSelect}"
+							selectionMode="single" dblClickSelect="true"
+							rowSelectListener="#{convocatoriaController.seleccionarConvocatoria}">
+							
+							<f:facet name="header">
+					        LISTADO DE SOLICITUDES
+					        </f:facet>
+					  
+					        <p:column style="width:10px; text-align:center">
+								<f:facet name="header">Nro.</f:facet>
+								<h:outputText value="#{rowConvocatorias.idConvocatoria}"/>
+							</p:column>
+							
+							<p:column style="width:400px">
+								<f:facet name="header">Objetivo</f:facet>
+								<h:outputText value="#{rowConvocatorias.objetivoConv}" />
+							</p:column>
+							
+							<p:column style="width:80px">
+								<f:facet name="header">Codigo Dep.</f:facet>
+								<h:outputText value="#{rowConvocatorias.codDep}" />
+							</p:column>
+							
+							<p:column style="width:365px">
+								<f:facet name="header">Dependencia</f:facet>
+								<h:outputText value="#{rowConvocatorias.descDep}" />
+							</p:column>
+							
+						</p:dataTable>
+</ui:composition>

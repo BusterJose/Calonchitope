@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+	<p:dataTable id="tablaPlazasConvocatorias" emptyMessage="No hay plazas" paginator="true" rows="8" 
+		selectionMode="single" value="#{calificarCVController.listaPlazasDeConvocatoria}" var="plaza"
+		dblClickSelect="true" rowSelectListener="#{calificarCVController.elegirPlaza}" 
+		selection="#{calificarCVController.plazaSeleccionada}" onRowSelectUpdate="tabsCalificarCV">
+		<p:column headerText="Dependencia">
+			<h:outputText value="#{plaza.descDep}"/>
+		</p:column>
+		<p:column headerText="Cargo">
+			<h:outputText value="#{plaza.descCargo}"/>
+		</p:column>
+		<p:column headerText="Monto">
+			<h:outputText value="#{plaza.monto}"/>
+		</p:column>
+	</p:dataTable>
+	<br/>
+	<p:commandButton rendered="#{calificarCVController.btnJurado}" value="Iniciar Calificacion de CVs" 
+	image="ui-icon-play" update="@form" actionListener="#{calificarCVController.iniciarCalificaciones}" />
+	<p:commandButton rendered="#{calificarCVController.juradoPriv}" value="Seleccionar Jurados" 
+	image="ui-icon-search" oncomplete="elegirJuradosDlg.show();" update="@form"/>
+	
+	<p:dialog header="Elegir jurados" widgetVar="elegirJuradosDlg" id="elegirJuradosDlg" modal="true" resizable="false" width="400">
+		<p:fieldset legend="Jurados">
+			<p:dataTable value="#{calificarCVController.listaServidores}" var="serv" emptyMessage="No Existen jurados disponibles"
+			  id="tablaServidores" scrollable="true" height="150" selectionMode="multiple" selection="#{calificarCVController.servidoresSeleccionados}">		
+				<f:facet name="header">
+					<h:outputText value="Jurados disponibles" />
+				</f:facet>
+				<p:column headerText="Codigo" style="width:82px;">
+					<h:outputText value="#{serv.idServidor}" />
+				</p:column>
+				<p:column headerText="Nombres" style="width:230px;">
+					<h:outputText value="#{serv.paterno} #{serv.materno} #{serv.nombre}" />
+				</p:column>
+			</p:dataTable>
+			<br />
+			<p:commandButton image="ui-icon-check" value="Elegir" action="#{calificarCVController.elegirJurados}" update="@form" />
+		</p:fieldset>
+	</p:dialog>
+</ui:composition>

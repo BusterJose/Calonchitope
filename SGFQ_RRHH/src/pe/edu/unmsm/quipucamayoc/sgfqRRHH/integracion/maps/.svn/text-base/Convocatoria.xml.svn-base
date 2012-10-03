@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Convocatoria">
+
+	<typeAlias alias="ConvocatoriaDTO" type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.ConvocatoriaDTO"/>
+	<typeAlias alias="VWConvocatoriaDTO" type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.VWConvocatoriaDTO"/>
+	
+	<resultMap class="ConvocatoriaDTO" id="rsConvocatoriasByEstadoAnioMes">
+		<result property="idConvocatoria" columnIndex="1"/>
+		<result property="idEstadoConv" columnIndex="2"/>
+		<result property="idDep" columnIndex="3"/>
+		<result property="codDep" columnIndex="4"/>
+		<result property="descDep" columnIndex="5"/>
+		<result property="objetivoConv" columnIndex="6"/>
+		<result property="fechaCreacion" columnIndex="7"/>
+		<result property="fechaIniPublicConv" columnIndex="8"/>
+		<result property="fechaFinPublicConv" columnIndex="9"/>
+		<result property="periodoPublicConv" columnIndex="10"/>
+		<result property="fechaIniCV" columnIndex="11"/>
+		<result property="fechaFinCV" columnIndex="12"/>
+		<result property="periodoCV" columnIndex="13"/>
+		<result property="fechaIniEvalCV" columnIndex="14"/>
+		<result property="fechaFinEvalCV" columnIndex="15"/>
+		<result property="periodoEvalCV" columnIndex="16"/>
+		<result property="fechaIniEntrevista" columnIndex="17"/>
+		<result property="fechaFinEntrevista" columnIndex="18"/>
+		<result property="periodoEntrevista" columnIndex="19"/>
+		<result property="fechaIniPublicResult" columnIndex="20"/>
+		<result property="fechaFinPublicResult" columnIndex="21"/>
+		<result property="periodoPublicResult" columnIndex="22"/>
+		<result property="fechaIniSuscripContrato" columnIndex="23"/>
+		<result property="fechaFinSuscripContrato" columnIndex="24"/>
+		<result property="periodoSuscripContrato" columnIndex="25"/>
+		<result property="descEstado" columnIndex="26"/>
+	</resultMap>
+
+	<resultMap class="ConvocatoriaDTO" id="mapaConvocatoriaEvaluacion">
+		<result property="idConvocatoria" columnIndex="1"/>
+		<result property="idEstadoConv" columnIndex="2"/>
+		<result property="idDep" columnIndex="3"/>
+		<result property="objetivoConv" columnIndex="4"/>
+		<result property="fechaIniEvalCV" columnIndex="5"/>
+		<result property="fechaFinEvalCV" columnIndex="6"/>
+		<result property="descDep" columnIndex="7"/>
+		<result property="fechaIniEntrevista" columnIndex="8"/>
+		<result property="fechaFinEntrevista" columnIndex="9"/>
+	</resultMap>
+	
+	<resultMap class="VWConvocatoriaDTO" id="rsConvocatoriasActuales">
+		<result property="idConvocatoria" columnIndex="1"/>
+		<result property="idEstadoConv" columnIndex="2"/>
+		<result property="idDep" columnIndex="3"/>
+		<result property="descDep" columnIndex="4"/>
+		<result property="objetivoConv" columnIndex="5"/>
+		<result property="fechaIniPublicConv" columnIndex="6"/>
+		<result property="fechaFinPublicConv" columnIndex="7"/>
+		<result property="descEstadoConv" columnIndex="8"/>
+	</resultMap>
+
+
+	<select id="selectConvocatoriasByEstadoAnioMes" resultMap="rsConvocatoriasByEstadoAnioMes" parameterClass="java.util.Map">
+		SELECT
+			conv.c_id_convocatoria, conv.n_id_estado_convocatoria,
+            ud.ud_id, ud.ud_cod, ud.ud_dsc,
+            conv.t_objetivo, conv.f_fecha_creacion,
+            conv.f_fecha_ini_publi_conv, conv.f_fecha_fin_publi_conv,
+            to_char(conv.f_fecha_ini_publi_conv,'dd/mm/yyyy') || ' - ' || to_char(conv.f_fecha_fin_publi_conv,'dd/mm/yyyy') periodo_publi_conv,
+            conv.f_fecha_ini_cv, conv.f_fecha_fin_cv,
+            to_char(conv.f_fecha_ini_cv,'dd/mm/yyyy') || ' - ' || to_char(conv.f_fecha_fin_cv,'dd/mm/yyyy') periodo_cv,
+            conv.f_fecha_ini_eval_cv, conv.f_fecha_fin_eval_cv,
+            to_char(conv.f_fecha_ini_eval_cv,'dd/mm/yyyy') || ' - ' || to_char(conv.f_fecha_fin_eval_cv,'dd/mm/yyyy') periodo_eval_cv,
+            conv.f_fecha_ini_entrevista, conv.f_fecha_fin_entrevista,
+            to_char(conv.f_fecha_ini_entrevista,'dd/mm/yyyy') || ' - ' || to_char(conv.f_fecha_fin_entrevista,'dd/mm/yyyy') periodo_entrevista,
+            conv.f_fecha_ini_public_resultados, conv.f_fecha_fin_public_resultados,
+            to_char(conv.f_fecha_ini_public_resultados,'dd/mm/yyyy') || ' - ' || to_char(conv.f_fecha_fin_public_resultados,'dd/mm/yyyy') periodo_public_resultados,
+            conv.f_fecha_ini_suscrip_contrato, conv.f_fecha_fin_suscrip_contrato,
+            to_char(conv.f_fecha_ini_suscrip_contrato,'dd/mm/yyyy') || ' - ' || to_char(conv.f_fecha_fin_suscrip_contrato,'dd/mm/yyyy') periodo_suscrip_contrato,
+            convest.t_desc_estado_convocatoria
+		FROM
+			QPDATAGESTION.tb_convocatoria conv, qprodataquipu.uni_dep ud, QPDATAGESTION.tb_estado_convocatoria convest
+		WHERE
+			conv.n_id_dep = ud.ud_id AND
+			conv.n_id_estado_convocatoria=convest.c_id_estado_convocatoria AND
+            conv.n_id_estado_convocatoria = #idEstadoConv# AND
+            to_number(to_char(conv.f_fecha_creacion,'yyyy')) = #anioConv# AND
+            to_number(to_char(conv.f_fecha_creacion,'mm')) = #mesConv#
+		ORDER BY
+			conv.c_id_convocatoria
+	</select>
+	
+	<insert id="insertConvocatoria" parameterClass="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.ConvocatoriaDTO">
+		INSERT INTO
+			QPDATAGESTION.TB_CONVOCATORIA
+		VALUES
+			(#idConvocatoria#,#idEstadoConv#,#idDep#,#objetivoConv#,sysdate,#fechaIniPublicConv#,#fechaFinPublicConv#
+			#fechaIniCV#,#fechaFinCV#,#fechaIniEvalCV#,#fechaFinEvalCV#,#fechaIniEntrevista#,#fechaFinEntrevista#,
+			#fechaIniPublicResult#,#fechaFinPublicResult#,#fechaIniSuscripContrato#,#fechaFinSuscripContrato#)
+	</insert>
+	<insert id="insertSolicitudConvocatoria" parameterClass="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.ConvocatoriaDTO">
+	INSERT INTO
+			QPDATAGESTION.TB_CONVOCATORIA
+		 (c_id_convocatoria, n_id_estado_convocatoria,n_id_dep,t_objetivo, f_fecha_creacion)
+		VALUES
+			(#idConvocatoria#,#idEstadoConv#,#idDep#,#objetivoConv#,to_char(sysdate))
+	
+	</insert>
+	<update id="updateJuradosConvocatoria" parameterClass="ConvocatoriaDTO">
+		UPDATE
+				QPDATAGESTION.tb_convocatoria
+			SET
+				n_id_jurado1 = #idJurado1#,
+				n_id_jurado2 = #idJurado2#,
+				n_id_jurado3 = #idJurado3#				
+			WHERE
+				c_id_convocatoria = #idConvocatoria#
+	</update>
+	
+	<update id="updateConvocatoria" parameterClass="ConvocatoriaDTO">
+		UPDATE
+			QPDATAGESTION.tb_convocatoria
+		SET
+			t_objetivo = #objetivoConv#,
+			n_id_estado_convocatoria = #idEstadoConv#,
+			f_fecha_ini_publi_conv = #fechaIniPublicConv#,
+            f_fecha_fin_publi_conv = #fechaFinPublicConv#,
+            f_fecha_ini_cv = #fechaIniCV#,
+            f_fecha_fin_cv = #fechaFinCV#,
+            f_fecha_ini_eval_cv = #fechaIniEvalCV#,
+            f_fecha_fin_eval_cv = #fechaFinEvalCV#,
+            f_fecha_ini_entrevista = #fechaIniEntrevista#,
+            f_fecha_fin_entrevista = #fechaFinEntrevista#,
+            f_fecha_ini_public_resultados = #fechaIniPublicResult#,
+            f_fecha_fin_public_resultados = #fechaFinPublicResult#,
+            f_fecha_ini_suscrip_contrato = #fechaIniSuscripContrato#,
+            F_FECHA_FIN_SUSCRIP_CONTRATO = #fechaFinSuscripContrato#
+			
+		WHERE
+			c_id_convocatoria = #idConvocatoria#
+	</update>
+	
+	<delete id="deleteConvocatoria" parameterClass="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.ConvocatoriaDTO">
+		DELETE
+			QPDATAGESTION.TB_CONVOCATORIA 
+		WHERE
+			C_ID_CONVOCATORIA=#idConvocatoria#
+	</delete>
+	
+	<select id="getMaxidConvocatoria" resultClass="java.lang.Integer">
+		select
+			max(C_ID_CONVOCATORIA)
+		from
+			QPDATAGESTION.TB_CONVOCATORIA 
+	</select>
+	
+	<select id="getConvocatoriasActuales" resultMap="rsConvocatoriasActuales">
+		
+		SELECT conv.c_id_convocatoria,conv.n_id_estado_convocatoria, conv.n_id_dep, ud.UD_DSC, conv.T_OBJETIVO, conv.F_FECHA_INI_PUBLI_CONV, 
+		conv.F_FECHA_FIN_PUBLI_CONV, estconv.T_DESC_ESTADO_CONVOCATORIA   
+		FROM QPDATAGESTION.tb_convocatoria conv, qprodataquipu.uni_dep ud, QPDATAGESTION.tb_estado_convocatoria estconv
+		WHERE
+		conv.N_ID_DEP=ud.UD_ID(+) and
+		conv.N_ID_ESTADO_CONVOCATORIA=estconv.C_ID_ESTADO_CONVOCATORIA(+) and
+		sysdate between conv.F_FECHA_INI_PUBLI_CONV and conv.F_FECHA_FIN_PUBLI_CONV +1 and
+		conv.N_ID_ESTADO_CONVOCATORIA in(7,8,9,10,11,12)
+	
+	</select>
+	<select id="getVWConvocatoria" resultMap="rsConvocatoriasActuales">
+		SELECT conv.c_id_convocatoria,conv.n_id_estado_convocatoria, conv.n_id_dep, ud.UD_DSC, conv.T_OBJETIVO, conv.F_FECHA_INI_PUBLI_CONV, 
+		conv.F_FECHA_FIN_PUBLI_CONV, estconv.T_DESC_ESTADO_CONVOCATORIA   
+		FROM QPDATAGESTION.tb_convocatoria conv, qprodataquipu.uni_dep ud, QPDATAGESTION.tb_estado_convocatoria estconv
+		WHERE
+		conv.N_ID_DEP=ud.UD_ID(+) and
+		conv.N_ID_ESTADO_CONVOCATORIA=estconv.C_ID_ESTADO_CONVOCATORIA(+) and
+		conv.c_id_convocatoria=#idConvocatoria#
+	</select>
+	
+	<select id="obtenerConvocatoriasCerradas" resultMap="mapaConvocatoriaEvaluacion">
+		
+		select C_ID_CONVOCATORIA, N_ID_ESTADO_CONVOCATORIA,N_ID_DEP,T_OBJETIVO,
+		F_FECHA_INI_EVAL_CV,F_FECHA_FIN_EVAL_CV, dep.UD_DSC, F_FECHA_INI_ENTREVISTA, F_FECHA_FIN_ENTREVISTA 
+		from QPDATAGESTION.tb_convocatoria , QPRODATAQUIPU.uni_dep dep
+		where dep.UD_ID = n_id_dep and
+		SYSDATE between F_FECHA_INI_EVAL_CV and F_FECHA_FIN_EVAL_CV +1 and
+		n_id_estado_convocatoria=8
+		order by c_id_convocatoria
+		
+	</select>
+
+	<select id="obtenerConvocatoriasPublicadasCerradas" resultMap="mapaConvocatoriaEvaluacion">
+		
+		select C_ID_CONVOCATORIA, N_ID_ESTADO_CONVOCATORIA,N_ID_DEP,T_OBJETIVO,
+		F_FECHA_INI_EVAL_CV,F_FECHA_FIN_EVAL_CV, dep.UD_DSC, F_FECHA_INI_ENTREVISTA, F_FECHA_FIN_ENTREVISTA 
+		from QPDATAGESTION.tb_convocatoria , QPRODATAQUIPU.uni_dep dep
+		where dep.UD_ID = n_id_dep and
+		to_number(to_char(f_fecha_creacion,'yyyy'))=to_number(to_char(sysdate,'yyyy')) and
+        to_number(to_char(f_fecha_creacion,'mm'))=to_number(to_char(sysdate,'mm')) and
+		n_id_estado_convocatoria in(7,8)
+		order by c_id_convocatoria
+		
+	</select>
+	
+	<select id="selectConvFaseEntrevista" resultMap="mapaConvocatoriaEvaluacion">
+		SELECT C_ID_CONVOCATORIA,N_ID_ESTADO_CONVOCATORIA, N_ID_DEP, T_OBJETIVO, 
+		F_FECHA_INI_EVAL_CV,F_FECHA_FIN_EVAL_CV, dep.UD_DSC, F_FECHA_INI_ENTREVISTA, F_FECHA_FIN_ENTREVISTA 
+		FROM QPDATAGESTION.TB_CONVOCATORIA, QPRODATAQUIPU.uni_dep dep
+		WHERE N_ID_DEP=dep.UD_ID  AND
+		to_number(to_char(f_fecha_creacion,'yyyy'))=to_number(to_char(sysdate,'yyyy')) and
+        to_number(to_char(f_fecha_creacion,'mm'))=to_number(to_char(sysdate,'mm')) and
+		n_id_estado_convocatoria=11
+		order by c_id_convocatoria
+	</select>
+	
+	<update id="updateEstadoConvocatoria" parameterClass="java.util.HashMap">
+		update tb_convocatoria set n_id_estado_convocatoria = #estadoConv#
+		where  c_id_convocatoria = #idConvocatoria#
+	</update>
+	
+	<select id="obtenerJuradosxConvocatoria"  parameterClass="java.lang.Integer" resultClass="ConvocatoriaDTO" >
+	   select C_ID_CONVOCATORIA as idConvocatoria, N_ID_JURADO1 as idJurado1, (select T_APE_PAT_SERV || ' ' || T_APE_MAT_SERV ||' ' || T_NOMB_SERV 
+       from  QPDATAGESTION.tb_servidor where N_ID_JURADO1 = C_ID_SERVIDOR) as nomJurado1,
+       N_ID_JURADO2 as idJurado2,(select  T_APE_PAT_SERV || ' ' || T_APE_MAT_SERV ||' ' || T_NOMB_SERV 
+       from  QPDATAGESTION.tb_servidor where N_ID_JURADO2 = C_ID_SERVIDOR) as nomJurado2,
+       N_ID_JURADO3 as idJurado3 ,(select T_APE_PAT_SERV || ' ' || T_APE_MAT_SERV ||' ' || T_NOMB_SERV 
+       from  QPDATAGESTION.tb_servidor where N_ID_JURADO3 = C_ID_SERVIDOR) as nomJurado3
+       from QPDATAGESTION.tb_convocatoria
+	   where C_ID_CONVOCATORIA = #idConvocatoria#
+	</select>
+</sqlMap>

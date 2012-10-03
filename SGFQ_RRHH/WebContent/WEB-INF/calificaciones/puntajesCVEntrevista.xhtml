@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<p:dialog header="Asignar puntajes Curriculum" id="asignarPuntajeDlg" widgetVar="asignarPuntajeDlg" modal="true" resizable="false" width="400">
+	<p:fieldset legend="Puntaje por Jurado">
+	<h:outputText value="Postulante: #{calificarCVController.postulanteSeleccionado.cvApePat} #{calificarCVController.postulanteSeleccionado.cvApeMat} #{calificarCVController.postulanteSeleccionado.cvNombres}" />
+				<br></br><br></br>
+			<p:dataTable id="tablaPuntajesJurados" value="#{calificarCVController.listPuntajexPostulante}" 
+			var="pun" emptyMessage="No hay puntajes">
+				<f:facet name="header">
+					<h:outputText value="Listado de puntajes por jurado"></h:outputText>
+				</f:facet>
+				<p:column headerText="Jurado">
+					<h:outputText value="#{pun.idJurado} - #{pun.nomJurado}"/>
+				<f:facet name="footer">Promedio Puntaje</f:facet>	
+				</p:column>
+				<p:column headerText="Puntaje">
+					<h:inputText size="5" value="#{pun.puntajeCV}" />
+				<f:facet name="footer">
+				<h:outputText value="#{calificarCVController.promedioCV}"></h:outputText>
+				</f:facet>	
+				</p:column>				
+			</p:dataTable>
+			<br />
+			<p:commandButton ajax="true" value="Guardar puntajes" image="ui-icon-disk" widgetVar="btnGuardar"
+			action="#{calificarCVController.guardarPuntajesCurriculums}" update="notificacionCalificacion,tablaPuntajesJurados" /> 
+	
+    </p:fieldset>
+	</p:dialog>
+	<p:dialog header="Asignar puntajes Entrevista" id="asignarPuntajeEntrevistaDlg" widgetVar="asignarPuntajeEntrevistaDlg" modal="true" resizable="false" width="500">
+		<p:fieldset legend="Puntaje por Jurado">
+		<h:outputText value="Postulante: #{calificarCVController.postulanteSeleccionado.cvApePat} #{calificarCVController.postulanteSeleccionado.cvApeMat} #{calificarCVController.postulanteSeleccionado.cvNombres}" />
+		<br></br><br></br>				
+		<p:dataTable id="tablaPuntajesJuradosEntrevista" value="#{calificarCVController.listPuntajexPostulante}" 
+		var="puntaje" emptyMessage="No hay puntajes" style="width:100%">
+				<f:facet name="header">
+					<h:outputText value="Listado de puntajes por jurado"></h:outputText>
+				</f:facet>
+				<p:column headerText="Jurado" style="align:center;width:60%;">
+					<h:outputText value="#{puntaje.idJurado} - #{puntaje.nomJurado}"/>
+					<f:facet name="footer">
+					<h:outputText value="Promedio Puntaje"></h:outputText>
+					</f:facet>
+				</p:column>
+				<p:column headerText="Puntaje CV" style="align:center;width:20%;">
+					<h:inputText size="5" value="#{puntaje.puntajeCV}" disabled="true"/>
+				<f:facet name="footer">
+				<h:outputText  id="txtpromCV" value="#{calificarCVController.promedioCV}"></h:outputText>
+				</f:facet>					
+				</p:column>				
+				<p:column headerText="Puntaje Entrevista" style="align:center;width:20%;">
+					<h:inputText size="5" value="#{puntaje.puntajeEntrevista}" />
+				<f:facet name="footer">
+				<h:outputText  value="#{calificarCVController.promedioEntrevista}"></h:outputText>
+				</f:facet>					
+				</p:column>
+		</p:dataTable>
+			<br />
+			<p:commandButton ajax="true" value="Guardar puntajes" 
+			image="ui-icon-disk" actionListener="#{calificarCVController.guardarPuntajesCurriculums}" update="notificacionCalificacion,tablaPuntajesJuradosEntrevista"></p:commandButton>
+	
+		</p:fieldset>
+	</p:dialog>
+</ui:composition>

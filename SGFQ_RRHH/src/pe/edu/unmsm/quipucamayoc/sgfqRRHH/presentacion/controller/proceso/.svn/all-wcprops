@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/rrhh/!svn/ver/984/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso
+END
+ProgramacionBaseController.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/rrhh/!svn/ver/930/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso/ProgramacionBaseController.java
+END
+MantePlazasController.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/rrhh/!svn/ver/1058/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso/MantePlazasController.java
+END
+EnvioSolicitudController.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/rrhh/!svn/ver/930/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso/EnvioSolicitudController.java
+END
+ReportePAPController.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/rrhh/!svn/ver/1048/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso/ReportePAPController.java
+END
+CalificarCVController.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/rrhh/!svn/ver/930/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso/CalificarCVController.java
+END
+ConsultaServidorController.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/rrhh/!svn/ver/1002/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso/ConsultaServidorController.java
+END
+ConvocatoriaController.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/presentacion/controller/proceso/ConvocatoriaController.java
+END

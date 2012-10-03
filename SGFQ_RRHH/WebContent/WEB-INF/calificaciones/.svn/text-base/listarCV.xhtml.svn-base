@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+	<p:dataTable id="tablaCVPlazas" emptyMessage="No hay CV" paginator="true" rows="8" 
+		onRowEditUpdate="notificacionCalificacion"
+		value="#{calificarCVController.listaCVxPlaza}" var="cv">
+		<p:column headerText="Dni">
+			<h:outputText value="#{cv.cvDni}"/>
+		</p:column>
+		<p:column headerText="Paterno">
+			<h:outputText value="#{cv.cvApePat}"/>
+		</p:column>
+		<p:column headerText="Materno">
+			<h:outputText value="#{cv.cvApeMat}"/>
+		</p:column>
+		<p:column headerText="Nombre">
+			<h:outputText value="#{cv.cvNombres}"/>
+		</p:column>
+		<p:column headerText="Grado Academico" style="width:9px;">
+			<p:commandButton image="ui-icon-contact" title="Grados Academicos" action="#{calificarCVController.obtenerGradosAcadxPostulante}" oncomplete="gradosAcadDlg.show();" update="dataGradosAcad">
+				<f:setPropertyActionListener target="#{calificarCVController.postulanteSeleccionado}" value="#{cv}" />
+			</p:commandButton>
+		</p:column>
+		<p:column headerText="Exp. Laborales" style="width:9px;">
+			<p:commandButton image="ui-icon-folder-open" title="Experiencias Laborales" action="#{calificarCVController.obtenerExpLaboralxPostulante}"  oncomplete="expLaboralDlg.show();" update="dataExpLab" >
+				<f:setPropertyActionListener target="#{calificarCVController.postulanteSeleccionado}" value="#{cv}" />
+			</p:commandButton>	
+		</p:column>
+		<p:column headerText="Puntaje CV" rendered="#{calificarCVController.fechaCV}">
+			<p:commandButton image="ui-icon-person" title="Puntaje Jurado" oncomplete="asignarPuntajeDlg.show();" action="#{calificarCVController.cargarJuradosxConvocatoria}" update="@form" >
+				<f:setPropertyActionListener target="#{calificarCVController.postulanteSeleccionado}" value="#{cv}" />
+			</p:commandButton>		
+		</p:column>
+		<p:column headerText="Puntaje Entrevista" rendered="#{calificarCVController.fechaEntrevista}">
+			<p:commandButton image="ui-icon-person" title="Puntaje Jurado" oncomplete="asignarPuntajeEntrevistaDlg.show();" action="#{calificarCVController.cargarJuradosxConvocatoria}" update="@form" >
+				<f:setPropertyActionListener target="#{calificarCVController.postulanteSeleccionado}" value="#{cv}" />
+			</p:commandButton>	
+		</p:column>		
+	</p:dataTable>
+	
+	<p:dialog header="Grados Academicos del Postulante" id="gradosAcadDlg" widgetVar="gradosAcadDlg" modal="true" >
+		<p:fieldset legend="Grados Academicos Alcanzados">
+			<p:dataList style="text-align: left;" id="dataGradosAcad" value="#{calificarCVController.gradosAcademicoPostulante}" var="grad" itemType="circle">
+				#{grad.estudiosUnivInst}, #{grad.nombreUnivInst},  #{grad.nivelAcadLogr}, #{grad.fechaIni} - #{grad.fechaFin}
+			</p:dataList>
+		</p:fieldset>
+	</p:dialog>
+	
+	<p:dialog header="Experiencia Laboral del Postulante" id="expLaboralDlg" widgetVar="expLaboralDlg" modal="true" >
+		<p:fieldset legend="Experiencias Laborales">
+			<p:dataList style="text-align: left;" id="dataExpLab" value="#{calificarCVController.expLaboralPostulante}" var="exp" itemType="circle">
+				#{exp.nomEmpresa}, #{exp.actividadEmpresa}, #{exp.sueldo}, #{exp.fechaIni}, #{exp.fechaFin}
+			</p:dataList>
+		</p:fieldset>
+	</p:dialog>
+	
+</ui:composition>

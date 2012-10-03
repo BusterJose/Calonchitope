@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+	<p:dataTable id="tablaConvocatorias" emptyMessage="No hay convocatorias" paginator="true" rows="8" 
+		selectionMode="single" value="#{calificarCVController.listConvocatorias}" var="conv"
+		dblClickSelect="true" selection="#{calificarCVController.convocatoriaSeleccionada}"  
+		rowSelectListener="#{calificarCVController.elegirConvocatoria}" onRowSelectUpdate="tabsCalificarCV">
+		
+		<p:column headerText="Dependencia">
+			<h:outputText value="#{conv.descDep}"/>
+		</p:column>
+		<p:column headerText="Objetivo">
+			<h:outputText value="#{conv.objetivoConv}"/>
+		</p:column>
+		<p:column headerText="Fecha Inicio Evaluacion ">
+			<h:outputText value="#{conv.fechInicEvalCV}" rendered="#{calificarCVController.fechaCV}"/>
+			<h:outputText value="#{conv.strfechaIniEntrevista}" rendered="#{calificarCVController.fechaEntrevista}"></h:outputText>
+		</p:column>
+		<p:column headerText="Fecha Fin Evaluacion">
+			<h:outputText value="#{conv.fechFinEvalCV}" rendered="#{calificarCVController.fechaCV}"/>
+			<h:outputText value="#{conv.strfechaFinEntrevista}" rendered="#{calificarCVController.fechaEntrevista}"></h:outputText>
+		</p:column>
+	</p:dataTable>
+	<br />
+	<p:commandButton  value="#{calificarCVController.strPublicarPuntaje}" action="#{calificarCVController.publicarResultados}"
+	update="notificacionCalificacion,tablaConvocatorias" ajax="true"/>	
+</ui:composition>

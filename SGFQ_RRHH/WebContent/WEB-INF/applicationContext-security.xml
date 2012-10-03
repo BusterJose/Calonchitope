@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
+    		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xmlns:p="http://www.springframework.org/schema/p"
+    		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                       			 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
+
+    <http  access-denied-page="/pages/login.jsf"  entry-point-ref="AuthenticationProcessingFilterEntryPoint" session-fixation-protection="newSession" >
+    	<!--<intercept-url	pattern="/pages/login.jsf" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+    	<intercept-url	pattern="/pages/convocatorias/publicarConvocatorias.jsf" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/pages/pagePrincipal.jsf" access="ROLE_USER" />   -->
+         <intercept-url pattern="/index.jsp" filters="none" />
+         <intercept-url pattern="/pages/login.jsf" filters="none" />
+         <intercept-url pattern="/pages/convocatorias/publicarConvocatorias.jsf" filters="none" />
+         <intercept-url pattern="/pages/convocatorias/enviarCV.jsf" filters="none" />
+         <intercept-url pattern="/pages/convocatorias/publicarResultados.jsf" filters="none" />
+         <intercept-url pattern="/pages/convocatorias/vistaPreviaCV.jsf" filters="none" />
+		 <intercept-url pattern="/pages/convocatorias/EnvioSolicitudConvocatoria.jsf" access="ROLE_ADMIN_DEP" />
+         <intercept-url pattern="/pages/pagePrincipal.jsf" access="ROLE_ADMIN,ROLE_ADMIN_DEP" />
+         
+         <intercept-url pattern="/pages/convocatorias/*" access="ROLE_ADMIN" />
+         <intercept-url pattern="/pages/calificaciones/*" access="ROLE_ADMIN" />
+         <intercept-url pattern="/pages/procesos/*" access="ROLE_ADMIN,ROLE_ADMIN_DEP" />
+         <!-- <intercept-url pattern="/*" access="ROLE_ADMIN" /> -->
+           <form-login />
+            <anonymous />
+            <http-basic /> 
+        <logout logout-success-url="/pages/login.jsf" />         
+        <concurrent-session-control max-sessions="100" exception-if-maximum-exceeded="true" expired-url="/pages/login.jsf" />                
+	</http>
+	
+	<!--
+	
+	<beans:bean id="SpringFilterChainProxy" class="org.springframework.security.util.FilterChainProxy">
+		<filter-chain-map path-type="ant">
+			<filter-chain pattern="/pages/**" filters="httpSessionContextIntegrationFilter,
+														  securityRequestFilter,
+														  concurrentSessionFilter"/>
+		</filter-chain-map>
+	</beans:bean>
+	
+	<beans:bean id="httpSessionContextIntegrationFilter" class="org.springframework.security.context.HttpSessionContextIntegrationFilter"/>
+	
+	<beans:bean id="securityRequestFilter" class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter"/>
+	-->
+	
+	<authentication-manager alias="authenticationManager"/>    
+
+	<!-- 
+    <beans:bean id="customizedFormLoginFilter" class="org.springframework.security.ui.webapp.AuthenticationProcessingFilter">       
+       <custom-filter position="AUTHENTICATION_PROCESSING_FILTER"/>        
+       <beans:property name="defaultTargetUrl" value="/pages/mostrarUsuarios.jsf"/>
+       <beans:property name="authenticationFailureUrl" value="/pages/login.jsf?login_error=1"/>
+	   <beans:property name="authenticationManager" ref="QuipuAuthenticationManager"/>
+	   <beans:property name="allowSessionCreation" value="true" />	   
+	   <beans:property name="filterProcessesUrl" value="/j_spring_security_check"/>	   
+	</beans:bean>
+	-->	
+	<beans:bean id="concurrentSessionFilter" class="org.springframework.security.concurrent.ConcurrentSessionFilter">
+	  	<beans:property name="sessionRegistry">
+   			<beans:ref bean="sessionRegistry"/>
+ 			</beans:property>
+		<beans:property name="expiredUrl" value="/pages/login.xhtml"/>
+	</beans:bean>
+
+	
+	<beans:bean id="sessionRegistry" class="org.springframework.security.concurrent.SessionRegistryImpl"/>
+	
+	<beans:bean id="concurrentSessionController" class="org.springframework.security.concurrent.ConcurrentSessionControllerImpl">
+		<beans:property name="maximumSessions" value="1"/>
+		<beans:property name="sessionRegistry">
+		    <beans:ref bean="sessionRegistry"/>
+  		</beans:property>
+  		<beans:property name="exceptionIfMaximumExceeded" value="false"/>
+	</beans:bean>
+	 
+     
+    <beans:bean id="QuipuAuthenticationManager" class="org.springframework.security.providers.ProviderManager">
+		<beans:property name="providers">
+			<beans:list>
+				<beans:ref local="QuipuAuthenticationProvider"/>
+			</beans:list>
+		</beans:property>
+		<beans:property name="sessionController">
+			<beans:ref bean="concurrentSessionController"/>
+		</beans:property>
+	</beans:bean> 
+     
+    <beans:bean id="QuipuAuthenticationProvider" class="pe.edu.unmsm.quipucamayoc.sgfqRRHH.seguridad.QuipuAuthenticationProvider" />
+      	
+	<beans:bean id="AuthenticationProcessingFilterEntryPoint" class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint" >	
+		<beans:property name="loginFormUrl" value="/pages/login.jsf"/>		
+	</beans:bean>
+	    
+    <beans:bean id="loggerListener" class="org.springframework.security.event.authentication.LoggerListener" />                
+                        
+</beans:beans>

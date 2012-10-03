@@ -1,0 +1,34 @@
+9
+
+dir
+991
+http://172.16.156.102/svn/rrhh/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio
+http://172.16.156.102/svn/rrhh
+
+
+
+2012-09-11T13:11:14.756887Z
+991
+cgeronimo
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+726e874f-c351-466c-97f7-ed3d8e999e93
+
+dto
+dir
+
+service
+dir
+

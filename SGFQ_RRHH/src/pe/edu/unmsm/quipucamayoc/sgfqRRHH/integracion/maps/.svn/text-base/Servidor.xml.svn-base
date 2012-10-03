@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="servidor">
+
+<typeAlias alias="servidorDTO" type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.ServidorDTO"/>
+
+<resultMap class="servidorDTO" id="mapaServidor">
+	<result property="idServidor" columnIndex="1"/>
+	<result property="paterno" columnIndex="2"/>
+	<result property="materno" columnIndex="3"/>
+	<result property="nombre" columnIndex="4"/>
+	<result property="numDependencia" columnIndex="5"/>	
+</resultMap>
+
+<resultMap class="servidorDTO" id="mapaServidor2">
+	<result property="idServidor" columnIndex="1"/>
+	<result property="paterno" columnIndex="2"/>
+	<result property="materno" columnIndex="3"/>
+	<result property="nombre" columnIndex="4"/>
+	<result property="fechNac" columnIndex="5"/>
+	<result property="telefono" columnIndex="6"/>
+	<result property="cell" columnIndex="7"/>
+	<result property="email" columnIndex="8"/>
+	<result property="sexo" columnIndex="9"/>	
+	<result property="docIdent" columnIndex="10"/>
+	<result property="tipDocIden" columnIndex="11"/>
+	<result property="fechIngrUnmsm" columnIndex="12"/>
+	<result property="domicilio" columnIndex="13"/>
+	<result property="departNac" columnIndex="14"/>
+	<result property="numBrevete" columnIndex="15"/>
+	<result property="numSisPriPen" columnIndex="16"/>
+	<result property="entAseg" columnIndex="17"/>
+	<result property="estCivil" columnIndex="18"/>
+	<result property="nombDependencia" columnIndex="19"/>
+	<result property="plaza" columnIndex="20"/>
+<!-- 	<result property="nivelCarg" columnIndex="21"/>
+	<result property="condicionCarg" columnIndex="22"/> -->
+</resultMap>
+
+<select id="obtenerServidores" resultMap="mapaServidor">
+	select C_ID_SERVIDOR,T_APE_PAT_SERV,T_APE_MAT_SERV,T_NOMB_SERV,N_ID_DEPENDENCIA from QPDATAGESTION.tb_servidor 
+	order by T_APE_PAT_SERV,T_APE_MAT_SERV,T_NOMB_SERV
+</select>
+
+<select id="buscarServidorXApeNomb" parameterClass="java.util.Map" resultMap="mapaServidor2">
+	SELECT S.SER_COD, S.SER_APE_PAT, S.SER_APE_MAT, S.SER_NOM, S.SER_FECH_NAC, S.SER_TELEF, S.SER_TELEF_CELL, S.SER_MAIL, 
+		   DECODE(UPPER(S.SER_SEXO),'M','MASCULINO','F','FEMENINO',''), S.SER_DOC_ID_ACT, DI.ABV_DOC_ID, S.SER_FECH_IN_UNMSM,
+		   S.SER_DOM, S.SER_UBI_DEPT_NAC , S.SER_NUM_BREV, SE.SER_NUM_SIS_PRI_PEN, CSP.DES_CON_PLA, EA.DES_ENT_ASEG, EC.DESC_ESTCIV, UD.UD_DSC
+	FROM DATAPERSUEL.SERVIDOR S, DATAPERSUEL.SERVIDOR_ESTADO SE, DATAPERSUEL.SERVIDOR_ORIGEN SO, DATAPERSUEL.TIP_SERVIDOR TS,DATAPERSUEL.COND_SER_PLAN CSP, 
+	     DATAPERSUEL.DOC_IDENTIDAD DI, DATAPERSUEL.ENTIDAD_ASEGURADORA EA, DATAPERSUEL.ESTADO_CIVIL EC, QPRODATAQUIPU.UNI_DEP UD
+    WHERE  S.SER_COD=SE.SER_COD AND S.SER_COD=SO.SER_COD(+) AND SE.SER_TIP_ACT=TS.COD_TIP_SER AND S.SER_TIP_DOC_ID_ACT= DI.COD_DOC_ID 
+	       AND SE.SER_CON_PLA_ACT=CSP.COD_CON_PLA AND SE.SER_ENT_ASEG=EA.ENT_ASEG_COD AND S.SER_ECV_ACT=EC.COD_ESTCIV(+) AND UD.UD_COD=SE.SER_COD_DEP_ACT
+	       AND S.SER_APE_PAT LIKE #paterno# || '%' AND S.SER_APE_MAT LIKE #materno# || '%' AND S.SER_NOM LIKE #nombre# || '%'
+</select>
+<select id="buscarServidorXDni" resultMap="mapaServidor2" parameterClass="java.lang.Integer">
+	SELECT S.SER_COD, S.SER_APE_PAT, S.SER_APE_MAT, S.SER_NOM, S.SER_FECH_NAC, S.SER_TELEF, S.SER_TELEF_CELL, S.SER_MAIL, 
+		   DECODE(UPPER(S.SER_SEXO),'M','MASCULINO','F','FEMENINO',''), S.SER_DOC_ID_ACT, DI.ABV_DOC_ID, S.SER_FECH_IN_UNMSM,
+		   S.SER_DOM, S.SER_UBI_DEPT_NAC , S.SER_NUM_BREV, SE.SER_NUM_SIS_PRI_PEN, CSP.DES_CON_PLA, EA.DES_ENT_ASEG, EC.DESC_ESTCIV, UD.UD_DSC
+	FROM DATAPERSUEL.SERVIDOR S, DATAPERSUEL.SERVIDOR_ESTADO SE, DATAPERSUEL.SERVIDOR_ORIGEN SO, DATAPERSUEL.TIP_SERVIDOR TS,DATAPERSUEL.COND_SER_PLAN CSP, 
+	     DATAPERSUEL.DOC_IDENTIDAD DI, DATAPERSUEL.ENTIDAD_ASEGURADORA EA, DATAPERSUEL.ESTADO_CIVIL EC, QPRODATAQUIPU.UNI_DEP UD
+    WHERE  S.SER_COD=SE.SER_COD AND S.SER_COD=SO.SER_COD(+) AND SE.SER_TIP_ACT=TS.COD_TIP_SER AND S.SER_TIP_DOC_ID_ACT= DI.COD_DOC_ID 
+	       AND SE.SER_CON_PLA_ACT=CSP.COD_CON_PLA AND SE.SER_ENT_ASEG=EA.ENT_ASEG_COD AND S.SER_ECV_ACT=EC.COD_ESTCIV(+) AND UD.UD_COD=SE.SER_COD_DEP_ACT 
+	       AND S.SER_DOC_ID_ACT LIKE #dni# || '%'	       
+</select>	       
+</sqlMap>

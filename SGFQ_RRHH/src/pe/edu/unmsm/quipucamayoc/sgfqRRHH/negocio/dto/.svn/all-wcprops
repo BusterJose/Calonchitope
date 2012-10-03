@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/rrhh/!svn/ver/991/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto
+END
+BaseDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/BaseDTO.java
+END
+ServidorDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/rrhh/!svn/ver/971/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/ServidorDTO.java
+END
+PostulanteDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/PostulanteDTO.java
+END
+RequisitoConvPlazaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/RequisitoConvPlazaDTO.java
+END
+UbigeoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/UbigeoDTO.java
+END
+PuntajeJuradoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/PuntajeJuradoDTO.java
+END
+ConvocatoriaPlazaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/ConvocatoriaPlazaDTO.java
+END
+ConvocatoriaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/rrhh/!svn/ver/927/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/ConvocatoriaDTO.java
+END
+CapUnidad.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/rrhh/!svn/ver/1013/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/CapUnidad.java
+END
+VWConvocatoriaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/VWConvocatoriaDTO.java
+END
+VWCargoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/rrhh/!svn/ver/1030/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/VWCargoDTO.java
+END
+CargoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/CargoDTO.java
+END
+PlazaServidorDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/rrhh/!svn/ver/1055/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/PlazaServidorDTO.java
+END
+NacionalidadDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/NacionalidadDTO.java
+END
+ServicioConvPlazaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/ServicioConvPlazaDTO.java
+END
+CVExpLabDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/rrhh/!svn/ver/927/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/CVExpLabDTO.java
+END
+DependenciaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/rrhh/!svn/ver/975/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/DependenciaDTO.java
+END
+PlazaServidorEstadoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/rrhh/!svn/ver/1055/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/PlazaServidorEstadoDTO.java
+END
+BaseConvocatoriaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/BaseConvocatoriaDTO.java
+END
+TipoRequisitoConvPlazaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/TipoRequisitoConvPlazaDTO.java
+END
+CVGradosAcadDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/rrhh/!svn/ver/927/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/CVGradosAcadDTO.java
+END
+CurriculumVitaeDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/rrhh/!svn/ver/927/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/CurriculumVitaeDTO.java
+END
+ServidorAntiguoDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/rrhh/!svn/ver/1014/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/ServidorAntiguoDTO.java
+END
+ServidorPAPDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/rrhh/!svn/ver/1042/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/ServidorPAPDTO.java
+END
+PlazaDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/rrhh/!svn/ver/927/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/PlazaDTO.java
+END
+EstadoCivilDTO.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/rrhh/!svn/ver/919/trunk/SGFQ_RRHH/src/pe/edu/unmsm/quipucamayoc/sgfqRRHH/negocio/dto/EstadoCivilDTO.java
+END

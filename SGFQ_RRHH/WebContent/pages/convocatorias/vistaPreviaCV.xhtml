@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"	
+	  xmlns:p="http://primefaces.prime.com.tr/ui"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Vista Previa</title>
+</h:head>
+<h:body style="background-image:url(#{loginController.rutaRaiz}/pages/images/fondo_login2.png);font-size:10px;">
+		<h:form>
+	<table style="width:100%; height:100%" border="0">
+	<tr style="height:100px"><td ></td><td align="right"></td></tr>
+	<tr style="height:50px">
+	<td></td>
+	<td align="center"> 
+	<table style="width:600px; height:550px;background-image:url(#{loginController.rutaRaiz}/pages/images/tabTranspEnvCV.png)" border="0">
+		<tr><td height="60px">
+		<p:commandLink value="ir a Convocatorias" style="color:white; font-family:Arial, Helvetica; font-size:14px" 
+				action="#{enviarCVController.iraPublicaciones}" ajax="false"/>
+		</td></tr>
+		<tr><td align="center">
+			<h:outputText value="#{enviarCVController.msjCV}" style="font-size:18px; color:white"/>
+	<p:panel header="Vista Previa CV" style="width:600;height:500;">	
+	
+	<p:outputPanel id="dlgVistaPreviaCurriculum">
+	<p:fieldset>
+			<table width="100%">
+	<tr>
+	<td><h:outputText value="Nombres y Apellidos:"></h:outputText></td>
+	<td> <h:outputText id="datosPostula" value="#{enviarCVController.cv.cvNombres}, #{enviarCVController.cv.cvApePat}  #{enviarCVController.cv.cvApeMat}"></h:outputText></td>
+	</tr>
+	<tr>
+	<td><h:outputText value="EDAD:"/></td>
+	<td><h:outputText value="#{enviarCVController.cv.cvEdad}"/></td>
+	</tr>
+	<tr>
+   	<td><h:outputText value="SEXO:"/></td>
+   	<td>
+   	<h:outputText value="#{enviarCVController.cv.strSexo}"></h:outputText>
+   	</td>
+   	</tr>
+	<tr>
+	<td><h:outputText value="ESTADO CIVIL:"/></td>
+		<td>
+		<h:outputText value="#{enviarCVController.cv.strEstCivil}"></h:outputText>
+		</td>
+	</tr>
+	<tr>
+     <td><h:outputText value="FECHA DE NACIMIENTO:"/></td>
+     <td><h:outputText value="#{enviarCVController.cv.strFechaNac}"></h:outputText> </td>
+	</tr>
+	<tr>
+	<td><h:outputText value="DNI:"/></td>
+	<td><h:outputText value="#{enviarCVController.cv.cvDni}"/> </td>
+	</tr>
+	<tr>
+	<td><h:outputText value="RUC:"/></td>
+	<td><h:outputText value="#{enviarCVController.cv.cvRuc}"/> </td>
+	</tr>
+	<tr>
+   	<td><h:outputText value="Telefono:"/></td>
+   	<td><h:outputText value="#{enviarCVController.cv.cvTelFijo} - #{enviarCVController.cv.cvTelCel}"/> </td>
+   	</tr>   	
+   	<tr>
+   	<td><h:outputText value="Correo electronico:"/></td>
+   	<td><h:outputText value="#{enviarCVController.cv.cvEmail}"/> </td>
+   	</tr>
+   	<tr>
+   	<td><h:outputText value="NACIONALIDAD:"/></td>
+   	<td><h:outputText value="#{enviarCVController.cv.strNacionalidad}"></h:outputText> </td>
+   	</tr>
+   <tr>
+   	<td><h:outputText value="DEPARTAMENTO:"/></td>
+   	<td><h:outputText value="#{enviarCVController.cv.strDepartamento}"></h:outputText> </td>
+   	</tr>
+   	<tr>
+   	<td><h:outputText value="PROVINCIA:"/></td>
+   	<td><h:outputText value="#{enviarCVController.cv.strProvincia}"></h:outputText> </td>
+   	</tr> 
+   	<tr> 
+   	<td><h:outputText value="DISTRITO:"/></td> 
+   	<td><h:outputText value="#{enviarCVController.cv.strDistrito}"></h:outputText> </td> 
+   	</tr> 
+     	
+	<tr>
+	<td><h:outputText value="DOMICILIO:"/></td>
+	<td><h:outputText value="#{enviarCVController.cv.cvDomicilio}"/> </td>
+	</tr>	        	
+	</table>
+	</p:fieldset>
+	<br></br>
+	
+	<br></br>
+		 <ui:include src="/WEB-INF/curriculum/cvEstudios.xhtml"></ui:include>
+	 <br></br><br></br>
+	 	 <ui:include src="/WEB-INF/curriculum/cvExperienciaLab.xhtml"></ui:include>
+	
+	   <p:commandButton value="Imprimir" action="#{enviarCVController.imprimirVistaPrevia}"></p:commandButton>
+	</p:outputPanel>	
+	</p:panel>
+	</td>
+	</tr>
+	</table>
+	</td>
+	</tr>
+	</table>
+	
+</h:form>
+</h:body>
+</html>

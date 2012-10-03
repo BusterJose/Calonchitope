@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Ubigeo" >
+
+	<typeAlias alias="UbigeoDTO" type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.UbigeoDTO"/>
+	
+	<resultMap class="UbigeoDTO" id="rsUbigeo">
+		<result property="ubiId" columnIndex="1"/>
+		<result property="ubiCod" columnIndex="2"/>
+		<result property="ubiCodDep" columnIndex="3"/>
+		<result property="ubiCodProv" columnIndex="4"/>
+		<result property="ubiCodDist" columnIndex="5"/>
+		<result property="ubiDes" columnIndex="6"/>
+		<result property="ubiNiv" columnIndex="7"/>
+		<result property="ubiIdNiv1" columnIndex="8"/>
+		<result property="ubiIdNiv2" columnIndex="9"/>
+		<result property="ubiIdNiv3" columnIndex="10"/>
+	</resultMap>
+	
+	<select id="selectUbigeo" resultMap="rsUbigeo">
+		SELECT
+			ubi.c_ubi_id, ubi.t_ubi_cod, ubi.t_ubi_cod_dep, ubi.t_ubi_cod_prov, ubi.t_ubi_cod_dist, ubi.t_ubi_des,
+			ubi.n_ubi_niv, ubi.n_ubi_id_niv1, ubi.n_ubi_id_niv2, ubi.n_ubi_id_niv3
+		FROM
+			QPDATAGESTION.tb_ubigeo ubi
+	</select>
+	
+	<select id="selectUbigeoDepartamentos" resultMap="rsUbigeo">
+		SELECT
+			ubi.c_ubi_id, ubi.t_ubi_cod, ubi.t_ubi_cod_dep, ubi.t_ubi_cod_prov, ubi.t_ubi_cod_dist, ubi.t_ubi_des,
+			ubi.n_ubi_niv, ubi.n_ubi_id_niv1, ubi.n_ubi_id_niv2, ubi.n_ubi_id_niv3
+		FROM
+			QPDATAGESTION.tb_ubigeo ubi
+		WHERE
+			ubi.n_ubi_niv = 1
+	</select>
+	
+	<select id="selectUbigeoProvinciasByIdDep" resultMap="rsUbigeo" parameterClass="java.lang.Integer">
+		SELECT
+			ubi.c_ubi_id, ubi.t_ubi_cod, ubi.t_ubi_cod_dep, ubi.t_ubi_cod_prov, ubi.t_ubi_cod_dist, ubi.t_ubi_des,
+			ubi.n_ubi_niv, ubi.n_ubi_id_niv1, ubi.n_ubi_id_niv2, ubi.n_ubi_id_niv3
+		FROM
+			QPDATAGESTION.tb_ubigeo ubi
+		WHERE
+			ubi.n_ubi_niv = 2 and
+       		ubi.n_ubi_id_niv1 = #ubiIdNiv1#
+	</select>
+	
+	<select id="selectUbigeoDistritosByIdProv" resultMap="rsUbigeo" parameterClass="java.lang.Integer">
+		SELECT
+			ubi.c_ubi_id, ubi.t_ubi_cod, ubi.t_ubi_cod_dep, ubi.t_ubi_cod_prov, ubi.t_ubi_cod_dist, ubi.t_ubi_des,
+			ubi.n_ubi_niv, ubi.n_ubi_id_niv1, ubi.n_ubi_id_niv2, ubi.n_ubi_id_niv3
+		FROM
+			QPDATAGESTION.tb_ubigeo ubi
+		WHERE
+			ubi.n_ubi_niv = 3 and
+       		ubi.n_ubi_id_niv2 = #ubiIdNiv2#
+	</select>
+	
+</sqlMap>

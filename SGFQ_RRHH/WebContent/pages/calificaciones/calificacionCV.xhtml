@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/pages/plantilla.xhtml">
+	<ui:define name="title"> Calificacion CV </ui:define>
+	<ui:define name="contenido">
+		<f:view>
+			<div align="center">
+				<h:form id="formCalificarCvs" prependId="false" style="font-size:10px; width:800px;">
+				<p:panel header="Calificacion de Curriculum Vitae" closable="true"> 
+					<p:tabView id="tabsCalificarCV" activeIndex="#{calificarCVController.tabActivo}" style="width:700">
+						<p:tab title="Convocatorias">
+							<ui:include src="/WEB-INF/calificaciones/listarConvocatorias.xhtml"></ui:include>
+						</p:tab>
+						<p:tab title="Plazas" >
+							<ui:include src="/WEB-INF/calificaciones/listarPlazas.xhtml"></ui:include>
+						</p:tab>
+						<p:tab title="Listado CV">
+							<ui:include src="/WEB-INF/calificaciones/listarCV.xhtml"></ui:include>
+							<ui:include src="/WEB-INF/calificaciones/puntajesCVEntrevista.xhtml" />
+						</p:tab>	
+					</p:tabView>
+					
+				</p:panel>
+					<div align="center" style="padding-left:200px; padding-right:200px;">
+						<p:growl id="notificacionCalificacion" showDetail="true" life="3000"></p:growl>
+					</div>
+				</h:form>
+			</div>
+		</f:view>
+	</ui:define>
+</ui:composition>

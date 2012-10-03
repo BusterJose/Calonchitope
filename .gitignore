@@ -1,6 +1,8 @@
 *.class
 
 # Package Files #
-*.jar
+#*.jar#
 *.war
 *.ear
+SGFQ_RRHH/build
+SGFQ_RRHH/.svn

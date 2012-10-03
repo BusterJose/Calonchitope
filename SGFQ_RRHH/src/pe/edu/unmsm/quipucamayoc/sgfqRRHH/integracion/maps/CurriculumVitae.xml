@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="CurriculumVitae" >
+<typeAlias alias="CurriculumVitaeDTO" type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.CurriculumVitaeDTO"/>
+<typeAlias alias="estadoCivilDTO" type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.EstadoCivilDTO"/>
+<typeAlias alias="puntajeJuradoDTO" type="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.PuntajeJuradoDTO"/>
+
+<resultMap class="puntajeJuradoDTO" id="mapaPuntajeJurado">
+	<result property="idPuntajeJurado" columnIndex="1"/>
+	<result property="idJurado" columnIndex="2"/>
+	<result property="idConvocatoria" columnIndex="3"/>
+	<result property="idPlaza" columnIndex="4"/>
+	<result property="dniCV" columnIndex="5"/>
+	<result property="puntajeCV" columnIndex="6" nullValue="0"/>
+	<result property="puntajeEntrevista" columnIndex="7" nullValue="0"/>
+</resultMap>
+<resultMap class="puntajeJuradoDTO" id="rsPromedioCVxConvocatoria">
+	<result property="idConvocatoria" columnIndex="1"/>
+	<result property="idPlaza" columnIndex="2"/>
+	<result property="dniCV" columnIndex="3"/>
+	<result property="puntajeCV" columnIndex="4" nullValue="0"/>
+	<result property="puntajeEntrevista" columnIndex="5" nullValue="0"/>
+</resultMap>
+<resultMap class="CurriculumVitaeDTO" id="rsCV">
+	<result property="cvDni" columnIndex="1"/>
+	<result property="cvIdConvocatoria" columnIndex="2"/>
+	<result property="cvIdPlaza" columnIndex="3"/>
+	<result property="cvNombres" columnIndex="4"/>
+	<result property="cvApePat" columnIndex="5"/>
+	<result property="cvApeMat" columnIndex="6"/>
+	<result property="cvEdad" columnIndex="7"/>
+	<result property="cvEstCivil" columnIndex="8"/>
+	<result property="cvFechaNac" columnIndex="9"/>
+	<result property="cvNacionalidad" columnIndex="10"/>
+	<result property="cvDepartamento" columnIndex="11"/>
+	<result property="cvProvincia" columnIndex="12"/>
+	<result property="cvDistrito" columnIndex="13"/>
+	<result property="cvDomicilio" columnIndex="14"/>
+	<result property="cvTelFijo" columnIndex="15"/>
+	<result property="cvTelCel" columnIndex="16"/>
+	<result property="cvEmail" columnIndex="17"/>
+	<result property="cvRuc" columnIndex="18"/>
+	<result property="cvSexo" columnIndex="19"/>
+	<result property="puntajeCv" columnIndex="20" jdbcType="DOUBLE" nullValue="0" />
+	<result property="puntajeEntrevista" columnIndex="21" jdbcType="DOUBLE" nullValue="0" />
+	<result property="puntajeTotal" columnIndex="22" jdbcType="DOUBLE" nullValue="0" />
+	<result property="observacion" columnIndex="23"/>
+	<result property="strEstCivil" columnIndex="24"/>
+	<result property="strNacionalidad" columnIndex="25"/>
+	<result property="strDepartamento" columnIndex="26"/>
+	<result property="strProvincia" columnIndex="27"/>
+	<result property="strDistrito" columnIndex="28"/>
+	
+</resultMap>
+
+<resultMap class="CurriculumVitaeDTO" id="rsCVResultados">
+	<result property="cvDni" columnIndex="1"/>
+	<result property="cvIdConvocatoria" columnIndex="2"/>
+	<result property="cvIdPlaza" columnIndex="3"/>
+	<result property="cvNombres" columnIndex="4"/>
+	<result property="cvApePat" columnIndex="5"/>
+	<result property="cvApeMat" columnIndex="6"/>
+	<result property="puntajeCv" columnIndex="7"  jdbcType="DOUBLE" nullValue="0"/>
+	<result property="puntajeEntrevista" columnIndex="8" jdbcType="DOUBLE" nullValue="0"/>
+	<result property="puntajeTotal" columnIndex="9" jdbcType="DOUBLE" nullValue="0"/>
+	<result property="observacion" columnIndex="10"/>
+	<result property="descPlaza" columnIndex="11"/>
+</resultMap>
+
+<resultMap class="estadoCivilDTO" id="mapaEstadoCivil">
+	<result property="idEstCivil" column="C_ID_ESTADO_CIVIL"/>
+	<result property="descripcionEstCivil" column="T_DESC_ESTADO_CIVIL"/>
+</resultMap>
+<resultMap class="CurriculumVitaeDTO" id="rsCVmap">
+    <result property="cvDni" columnIndex="1"/>
+	<result property="cvIdConvocatoria" columnIndex="2"/>
+	<result property="cvIdPlaza" columnIndex="3"/>
+	<result property="cvNombres" columnIndex="4"/>
+	<result property="cvApePat" columnIndex="5"/>
+	<result property="cvApeMat" columnIndex="6"/>
+	<result property="cvEdad" columnIndex="7"/>
+	<result property="cvEstCivil" columnIndex="8"/>
+	<result property="cvFechaNac" columnIndex="9"/>
+	<result property="cvNacionalidad" columnIndex="10"/>
+	<result property="cvDepartamento" columnIndex="11"/>
+	<result property="cvProvincia" columnIndex="12"/>
+	<result property="cvDistrito" columnIndex="13"/>
+	<result property="cvDomicilio" columnIndex="14"/>
+	<result property="cvTelFijo" columnIndex="15"/>
+	<result property="cvTelCel" columnIndex="16"/>
+	<result property="cvEmail" columnIndex="17"/>
+	<result property="cvRuc" columnIndex="18"/>
+	<result property="cvSexo" columnIndex="19"/>
+	<result property="puntajeCv" columnIndex="20" jdbcType="DOUBLE" nullValue="0" />
+	<result property="puntajeEntrevista" columnIndex="21" jdbcType="DOUBLE" nullValue="0" />
+	<result property="puntajeTotal" columnIndex="22" jdbcType="DOUBLE" nullValue="0" />
+	<result property="observacion" columnIndex="23"/>
+	
+</resultMap>
+
+<insert id="insertCV" parameterClass="CurriculumVitaeDTO">
+	INSERT INTO QPDATAGESTION.TB_CURRICULUMVITAE
+	(C_CVDNI,N_ID_CONVOCATORIA,N_ID_PLAZA,T_CVNOM,T_CVAPEPAT,T_CVAPEMAT,N_CVEDAD,N_CVEST_CIVIL,F_CVFECHNAC,
+	N_CVNACIONALIDAD,N_CVDEPARTAMENTO,N_CVPROVINCIA,N_CVDISTRITO,T_CVDOMICILIO, T_TELFFIJO, T_TELFCEL, T_EMAIL, T_CVRUC,
+	N_CVSEXO,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA,N_PUNTAJE_TOTAL,T_OBSERVACION)
+	VALUES(#cvDni#,#cvIdConvocatoria#,#cvIdPlaza#,#cvNombres#,#cvApePat#,#cvApeMat#,#cvEdad#,#cvEstCivil#,#cvFechaNac#,
+	#cvNacionalidad#,#cvDepartamento#,#cvProvincia#,#cvDistrito#,#cvDomicilio#,#cvTelFijo#,#cvTelCel#,#cvEmail#,#cvRuc#,
+	#cvSexo#,#puntajeCv#,#puntajeEntrevista#,#puntajeTotal#,#observacion#)
+</insert>
+
+<delete id="deleteCV" >
+	DELETE QPDATAGESTION.TB_CURRICULUMVITAE WHERE C_CVDNI=#cvDni#
+</delete>
+
+<select id="selectCV" parameterClass="java.lang.String" resultMap="rsCV" >
+	SELECT cvs.C_CVDNI,cvs.N_ID_CONVOCATORIA,cvs.N_ID_PLAZA,cvs.T_CVNOM,cvs.T_CVAPEPAT,
+	   cvs.T_CVAPEMAT,cvs.N_CVEDAD,N_CVEST_CIVIL, cvs.F_CVFECHNAC,cvs.N_CVNACIONALIDAD,
+	   cvs.N_CVDEPARTAMENTO, cvs.N_CVPROVINCIA,cvs.N_CVDISTRITO,cvs.T_CVDOMICILIO, cvs.T_TELFFIJO, 
+	   cvs.T_TELFCEL, cvs.T_EMAIL,cvs.T_CVRUC,cvs.N_CVSEXO,cvs.N_PUNTAJE_CV,
+	   cvs.N_PUNTAJE_ENTREVISTA,cvs.N_PUNTAJE_TOTAL,cvs.T_OBSERVACION,estCivil.T_DESC_ESTADO_CIVIL, nac.T_NACNOM ,
+	   ubi1.T_UBI_DES,ubi2.T_UBI_DES,ubi3.T_UBI_DES
+	   FROM QPDATAGESTION.TB_CURRICULUMVITAE cvs,QPDATAGESTION.tb_estado_civil estCivil,
+	   QPDATAGESTION.tb_ubigeo ubi1, QPDATAGESTION.tb_ubigeo ubi2, QPDATAGESTION.tb_ubigeo ubi3,    
+	   QPDATAGESTION.tb_nacionalidad nac
+	   WHERE
+	   cvs.N_CVEST_CIVIL=estCivil.C_ID_ESTADO_CIVIL  and  
+	   cvs.N_CVNACIONALIDAD=nac.C_NACCOD  and  
+	   cvs.N_CVDEPARTAMENTO=ubi1.C_UBI_ID and
+	   cvs.N_CVPROVINCIA=ubi2.C_UBI_ID and
+	   cvs.N_CVDISTRITO=ubi3.C_UBI_ID and    
+	   cvs.C_CVDNI= #cvDni#
+</select>
+
+<select id="selectCVestadoResultados" resultMap="rsCVResultados" >
+	SELECT cv.C_CVDNI,cv.N_ID_CONVOCATORIA,cv.N_ID_PLAZA,cv.T_CVNOM,cv.T_CVAPEPAT,cv.T_CVAPEMAT,
+	cv.N_PUNTAJE_CV,cv.N_PUNTAJE_ENTREVISTA,cv.N_PUNTAJE_TOTAL,cv.T_OBSERVACION,cargo.T_DESC_CARGO
+	FROM QPDATAGESTION.TB_CURRICULUMVITAE cv, QPDATAGESTION.TB_CONVOCATORIA conv ,
+	QPDATAGESTION.TB_PLAZA pl, QPDATAGESTION.TB_CARGO cargo,QPDATAGESTION.TB_CONVOCATORIA_PLAZAS convPl
+	WHERE cv.N_ID_CONVOCATORIA=conv.C_ID_CONVOCATORIA and
+	 conv.N_ID_ESTADO_CONVOCATORIA in (7,8,9,10,11,12) and
+	 conv.C_ID_CONVOCATORIA=convPl.N_ID_CONVOCATORIA and
+	 cv.N_ID_PLAZA=pl.C_ID_PLAZA and
+	 convPl.N_ID_PLAZA=pl.C_ID_PLAZA and
+	 pl.N_ID_CARGO=cargo.C_ID_CARGO and
+	 conv.C_ID_CONVOCATORIA=#idConv#
+	  ORDER BY cv.N_ID_CONVOCATORIA,cv.N_ID_PLAZA, cv.N_PUNTAJE_TOTAL DESC
+</select>
+
+<select id="obtenerEstadosCiviles" resultMap="mapaEstadoCivil">
+	select C_ID_ESTADO_CIVIL, T_DESC_ESTADO_CIVIL from QPDATAGESTION.tb_estado_civil
+</select>
+
+<select id="obtenerCVxConvPLaza" parameterClass="java.util.HashMap" resultMap="rsCVmap">
+	SELECT C_CVDNI,N_ID_CONVOCATORIA,N_ID_PLAZA,T_CVNOM,T_CVAPEPAT,T_CVAPEMAT,N_CVEDAD,N_CVEST_CIVIL,F_CVFECHNAC,
+	N_CVNACIONALIDAD,N_CVDEPARTAMENTO,N_CVPROVINCIA,N_CVDISTRITO,T_CVDOMICILIO, T_TELFFIJO, T_TELFCEL, T_EMAIL,T_CVRUC,
+	N_CVSEXO,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA,N_PUNTAJE_TOTAL,T_OBSERVACION
+	FROM QPDATAGESTION.TB_CURRICULUMVITAE 
+	where N_ID_CONVOCATORIA = #idConvocatoria# and N_ID_PLAZA = #idPlaza#
+</select>
+
+<select id="obtenerCVxConvPLazaEntrevista" parameterClass="java.util.HashMap" resultMap="rsCVmap">
+	SELECT C_CVDNI,N_ID_CONVOCATORIA,N_ID_PLAZA,T_CVNOM,T_CVAPEPAT,T_CVAPEMAT,N_CVEDAD,N_CVEST_CIVIL,F_CVFECHNAC,
+	N_CVNACIONALIDAD,N_CVDEPARTAMENTO,N_CVPROVINCIA,N_CVDISTRITO,T_CVDOMICILIO, T_TELFFIJO, T_TELFCEL, T_EMAIL,T_CVRUC,
+	N_CVSEXO,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA,N_PUNTAJE_TOTAL,T_OBSERVACION
+	FROM QPDATAGESTION.TB_CURRICULUMVITAE 
+	where N_ID_CONVOCATORIA = #idConvocatoria# and N_ID_PLAZA = #idPlaza# and <![CDATA[n_puntaje_cv >= 20]]>
+</select>
+
+<update id="actualizarPuntajeCV" parameterClass="CurriculumVitaeDTO">
+	update QPDATAGESTION.TB_CURRICULUMVITAE 
+	set N_PUNTAJE_CV = #puntajeCv#, N_PUNTAJE_ENTREVISTA=#puntajeEntrevista#,
+	N_PUNTAJE_TOTAL=#puntajeTotal#,T_OBSERVACION=#observacion#
+	where C_CVDNI =#cvDni# and N_ID_CONVOCATORIA = #cvIdConvocatoria# and N_ID_PLAZA = #cvIdPlaza#
+</update>
+
+<insert id="insertarPuntajeCV" parameterClass="PuntajeJuradoDTO">
+	insert into QPDATAGESTION.TB_PUNTAJE_JURADO (C_ID_PUNTAJE_JURADO,N_ID_JURADO,N_ID_CONVOCATORIA,
+	N_ID_PLAZA,N_DNI_CV,N_PUNTAJE_CV) values ((select nvl(max(C_ID_PUNTAJE_JURADO)+1,1) from TB_PUNTAJE_JURADO),#idJurado#,#idConvocatoria#,#idPlaza#,#dniCV#,#puntajeCV#)
+</insert>
+
+<update id="updatePuntajeCVxJurado" parameterClass="PuntajeJuradoDTO">
+	update QPDATAGESTION.TB_PUNTAJE_JURADO 
+	set N_PUNTAJE_CV = #puntajeCV#, N_PUNTAJE_ENTREVISTA=#puntajeEntrevista#
+	where N_ID_JURADO = #idJurado# and N_ID_CONVOCATORIA =#idConvocatoria# and N_ID_PLAZA = #idPlaza# and N_DNI_CV = #dniCV#
+</update>
+
+<select id="selectPuntajeJurado" resultMap="mapaPuntajeJurado" parameterClass="PuntajeJuradoDTO">
+	select C_ID_PUNTAJE_JURADO,N_ID_JURADO,N_ID_CONVOCATORIA,
+	N_ID_PLAZA,N_DNI_CV,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA from QPDATAGESTION.tb_puntaje_jurado 
+	where N_ID_CONVOCATORIA =#idConvocatoria# and N_ID_PLAZA=#idPlaza# and N_DNI_CV=#dniCV# and N_ID_JURADO=#idJurado#
+
+</select>
+<select id="selectPuntajeJuradoxPostulante" resultMap="mapaPuntajeJurado" parameterClass="java.util.HashMap">
+    select C_ID_PUNTAJE_JURADO,N_ID_JURADO,N_ID_CONVOCATORIA,
+	N_ID_PLAZA,N_DNI_CV,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA from QPDATAGESTION.tb_puntaje_jurado 
+	where N_ID_CONVOCATORIA =#idConvocatoria#  and N_DNI_CV = #dniCV#
+</select>
+
+<select id="selectPuntajePromCVxConvocatoria" resultMap="rsPromedioCVxConvocatoria" parameterClass="java.lang.Integer">
+    select N_ID_CONVOCATORIA,N_ID_PLAZA,N_DNI_CV, round( sum(N_PUNTAJE_CV)/count(*),2 )N_PUNTAJE_CV,
+    round(sum(N_PUNTAJE_ENTREVISTA)/count(*),2 )N_PUNTAJE_ENTREVISTA 
+    from QPDATAGESTION.tb_puntaje_jurado 
+    where N_ID_CONVOCATORIA =#idConvocatoria# 
+    group by n_dni_cv,N_ID_CONVOCATORIA,N_ID_PLAZA
+    order by n_puntaje_cv DESC 
+</select>
+
+<select id="selectGanadorxConvocatoriaxPlaza" resultMap="rsCVmap" parameterClass="java.lang.Integer">
+	SELECT C_CVDNI,N_ID_CONVOCATORIA,N_ID_PLAZA,T_CVNOM,T_CVAPEPAT,T_CVAPEMAT,N_CVEDAD,N_CVEST_CIVIL,F_CVFECHNAC,
+	N_CVNACIONALIDAD,N_CVDEPARTAMENTO,N_CVPROVINCIA,N_CVDISTRITO,T_CVDOMICILIO, T_TELFFIJO, T_TELFCEL, T_EMAIL,T_CVRUC,
+	N_CVSEXO,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA,N_PUNTAJE_TOTAL,T_OBSERVACION
+	from QPDATAGESTION.tb_curriculumvitae where n_id_convocatoria=#idConvocatoria# and 
+	(n_id_plaza,n_puntaje_total) in (select N_ID_PLAZA,max(N_PUNTAJE_TOTAL)
+	from tb_curriculumvitae 
+	where N_ID_CONVOCATORIA =#idConvocatoria# and
+	<![CDATA[n_puntaje_entrevista >= 30]]> and
+	<![CDATA[n_puntaje_cv>=20]]>
+	group by n_id_plaza)
+</select>
+<select id="selectGanadoresPrimeraFase" resultMap="rsCVmap" parameterClass="java.lang.Integer">
+    SELECT C_CVDNI,N_ID_CONVOCATORIA,N_ID_PLAZA,T_CVNOM,T_CVAPEPAT,T_CVAPEMAT,N_CVEDAD,N_CVEST_CIVIL,F_CVFECHNAC,
+    N_CVNACIONALIDAD,N_CVDEPARTAMENTO,N_CVPROVINCIA,N_CVDISTRITO,T_CVDOMICILIO, T_TELFFIJO, T_TELFCEL, T_EMAIL,T_CVRUC,
+    N_CVSEXO,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA,N_PUNTAJE_TOTAL,T_OBSERVACION
+    from QPDATAGESTION.tb_curriculumvitae cvi, QPDATAGESTION.tb_convocatoria conv
+    where cvi.N_ID_CONVOCATORIA=conv.C_ID_CONVOCATORIA and conv.N_ID_ESTADO_CONVOCATORIA=11 and
+    <![CDATA[n_puntaje_cv>=20]]>
+</select>
+<select id="selectPerdedoresPrimeraFase" resultMap="rsCVmap" parameterClass="java.lang.Integer">
+    SELECT C_CVDNI,N_ID_CONVOCATORIA,N_ID_PLAZA,T_CVNOM,T_CVAPEPAT,T_CVAPEMAT,N_CVEDAD,N_CVEST_CIVIL,F_CVFECHNAC,
+    N_CVNACIONALIDAD,N_CVDEPARTAMENTO,N_CVPROVINCIA,N_CVDISTRITO,T_CVDOMICILIO, T_TELFFIJO, T_TELFCEL, T_EMAIL,T_CVRUC,
+    N_CVSEXO,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA,N_PUNTAJE_TOTAL,T_OBSERVACION
+    from QPDATAGESTION.tb_curriculumvitae cvi, QPDATAGESTION.tb_convocatoria conv
+    where cvi.N_ID_CONVOCATORIA=conv.C_ID_CONVOCATORIA and conv.N_ID_ESTADO_CONVOCATORIA=11 and
+    <![CDATA[n_puntaje_cv<=20]]>
+</select>
+<select id="selectPerdedorexConvocatoriaxPlaza" resultMap="rsCVmap" parameterClass="java.lang.Integer">
+	SELECT C_CVDNI,N_ID_CONVOCATORIA,N_ID_PLAZA,T_CVNOM,T_CVAPEPAT,T_CVAPEMAT,N_CVEDAD,N_CVEST_CIVIL,F_CVFECHNAC,
+	N_CVNACIONALIDAD,N_CVDEPARTAMENTO,N_CVPROVINCIA,N_CVDISTRITO,T_CVDOMICILIO, T_TELFFIJO, T_TELFCEL, T_EMAIL,T_CVRUC,
+	N_CVSEXO,N_PUNTAJE_CV,N_PUNTAJE_ENTREVISTA,N_PUNTAJE_TOTAL,T_OBSERVACION
+	from QPDATAGESTION.tb_curriculumvitae where n_id_convocatoria=#idConvocatoria# and 
+	(n_id_plaza,n_puntaje_total) not in (select N_ID_PLAZA,max(N_PUNTAJE_TOTAL)
+	from tb_curriculumvitae 
+	where N_ID_CONVOCATORIA =#idConvocatoria# and
+	<![CDATA[n_puntaje_entrevista >= 30]]> and
+	<![CDATA[n_puntaje_cv>=20]]>
+	group by n_id_plaza)
+</select>
+</sqlMap>

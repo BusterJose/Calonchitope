@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/rrhh/!svn/ver/976/trunk/SGFQ_RRHH/WebContent/WEB-INF
+END
+faces-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/rrhh/!svn/ver/1038/trunk/SGFQ_RRHH/WebContent/WEB-INF/faces-config.xml
+END
+applicationContext-security.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/rrhh/!svn/ver/961/trunk/SGFQ_RRHH/WebContent/WEB-INF/applicationContext-security.xml
+END
+applicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/rrhh/!svn/ver/938/trunk/SGFQ_RRHH/WebContent/WEB-INF/applicationContext.xml
+END
+sql-map-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/rrhh/!svn/ver/1038/trunk/SGFQ_RRHH/WebContent/WEB-INF/sql-map-config.xml
+END
+.faces-config.xml.jsfdia
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/rrhh/!svn/ver/963/trunk/SGFQ_RRHH/WebContent/WEB-INF/.faces-config.xml.jsfdia
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/rrhh/!svn/ver/976/trunk/SGFQ_RRHH/WebContent/WEB-INF/web.xml
+END

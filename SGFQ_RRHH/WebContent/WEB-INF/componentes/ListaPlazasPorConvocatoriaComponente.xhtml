@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+	<table width="740px">	
+			<tr><td colspan="3" align="right" width="90%">Nro. Solicitud: </td>
+				<td align="left">
+					<h:outputText value="#{convocatoriaController.convocatoriaSelect.idConvocatoria}"/>
+				</td>
+			</tr>
+			<tr>
+				<td width="12%">Dependencia:</td>
+				<td colspan="3">
+					<h:outputText value="#{convocatoriaController.convocatoriaSelect.descDep}"/>
+				</td>
+			</tr>
+			<tr>
+				<td width="12%">Objetivo:</td>
+				<td colspan="3">
+					<h:outputText value="#{convocatoriaController.convocatoriaSelect.objetivoConv}"/>
+				</td>
+			</tr>		
+	</table>
+				
+		<p:dataTable id="dtPlazasConv" var="rowPlazas"
+			value="#{convocatoriaController.convocatoriaSelect.listConvPlaza}" update="tvConvocatorias"
+			style="font-size: 12px; width:720px"  rows="10">
+			
+			<f:facet name="header">
+	        	PLAZAS SOLICITADAS
+	        </f:facet>
+	  
+	        <p:column style="width:10px; text-align:center">
+				<f:facet name="header">Nro</f:facet>
+				<h:outputText value="#{rowPlazas.idPlaza}"/>
+			</p:column>
+			
+			<p:column style="width:400px">
+				<f:facet name="header">Plaza</f:facet>
+				<h:outputText value="#{rowPlazas.descCargo}"/>
+			</p:column>
+			
+			<p:column style="width:250px; text-align:center">
+				<f:facet name="header">Periodo</f:facet>
+				<h:outputText value="#{rowPlazas.periodo}"/>
+			</p:column>
+			
+			<p:column style="width:80px">
+				<f:facet name="header">Monto</f:facet>
+				<h:outputText value="#{rowPlazas.monto}"/>
+			</p:column>				
+		</p:dataTable>	
+	
+	</ui:composition>

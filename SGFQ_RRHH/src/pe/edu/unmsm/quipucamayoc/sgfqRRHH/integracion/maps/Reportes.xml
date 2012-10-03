@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="reportes" >
+		
+	<resultMap class="pe.edu.unmsm.quipucamayoc.sgfqRRHH.negocio.dto.ServidorPAPDTO" id="reporteMap">
+		<result property="ofigeneral"			columnIndex="1"/>
+		<result property="ud_dsc"				columnIndex="2"/>
+		<result property="t_abv_tipo_organo"	columnIndex="3"/>
+		<result property="t_des_tipo_organo"	columnIndex="4"/>
+		<result property="carg_estruct"			columnIndex="5"/>
+		<result property="nombres"				columnIndex="6"/>
+		<result property="codigo"				columnIndex="7"/>
+		<result property="clasif"				columnIndex="8"/>
+		<result property="previsto"				columnIndex="9"/>
+		<result property="vacante"				columnIndex="10"/>
+		<result property="ocupado"				columnIndex="11"/>
+		<result property="confianza"			columnIndex="12"/>
+		<result property="grupo_ocup"			columnIndex="13"/>
+		<result property="niv_remunerativo"		columnIndex="14"/>
+		<result property="total_bruto"			columnIndex="15"/>
+	</resultMap>
+	<select id="obtenerPAP" parameterClass="java.util.Map" resultMap="reporteMap">
+		select ofigeneral, ud_dsc,t_abv_tipo_organo, t_des_tipo_organo, carg_estruct, nombres, codigo,clasif,
+		 sum(previsto) previsto, sum(vacante) vacante ,decode(sum(ocupado),0,0,1) ocupado, confianza, trim(GRUPO_OCUP) GRUPO_OCUP, niv_remunerativo, sum(total_bruto) total_bruto
+		from (
+		    select decode(substr(ud.ud_cod, 0,1),'F',(SELECT UD2.UD_DSC FROM QPRODATAQUIPU.UNI_DEP UD2 WHERE UD2.UD_ID=ud.UNIDEPCALDEP),'ADMINISTRACION CENTRAL')
+		    ofigeneral,ud.ud_cod||'-'||ud.UD_DSC UD_DSC,to_number(tipoOrgCar.T_ABV_TIPO_ORGANO) T_ABV_TIPO_ORGANO , tipoOrgCar.T_DES_TIPO_ORGANO,
+		    decode(upper(cc.T_CARCLA_NOM) ,'PROFESOR ASOCIADO', cc.T_CARCLA_NOM ||' '|| ce.T_NOM_CARGO_ESTR,
+		                                'PROFESOR AUXILIAR',cc.T_CARCLA_NOM ||' '|| ce.T_NOM_CARGO_ESTR,
+		                                'PROFESOR PRINCIPAL',cc.T_CARCLA_NOM ||' '|| ce.T_NOM_CARGO_ESTR, ce.T_NOM_CARGO_ESTR) carg_estruct,
+		    cierre.C_CC_COD_PLAZA codigo,cc.T_CARCLA_TIPO_TRAB clasif ,
+		    decode(s.SER_APE_PAT || ' ' || SER_APE_MAT || ' ' || SER_NOM,'  ',decode(cierre.C_CC_EST_PLAZA, 2, 'PREVISTO', 3,'VACANTE'),s.SER_APE_PAT || ' ' || SER_APE_MAT || ' ' || SER_NOM) nombres,
+		    decode(cierre.C_CC_EST_PLAZA, 2, 1, 0) previsto,
+		    decode(cierre.C_CC_EST_PLAZA, 3, 1, 0) vacante,
+		    decode(cierre.C_CC_EST_PLAZA,6, 1, 5, 1, 4, 1, 0) ocupado,
+		    decode(ce.N_CONFI_CARGO_ESTR,'SI', 'X', 'NO','','') confianza,
+		    se.SER_CAT_ACT niv_remunerativo,
+		    ts.DES_TIP_SER GRUPO_OCUP,
+		    sif.ITP_MONTO total_bruto
+		
+		from
+		QPDATAGESTION.TB_PLAZA_SERVIDOR plaServ,
+		DATAPERSUEL.SERVIDOR s,
+		DATAPERSUEL.SERVIDOR_ESTADO se,
+		DATAPERSUEL.TIP_SERVIDOR ts,
+		DATAPERSUEL.SERVIDOR_ITEM_FIJO sif,
+		QPRODATAPLANI.tb_cierre_cap cierre ,
+		qprodataplani.TB_TIPO_ORGANO_DEPENDENCIA tipoOrgDep,
+		qprodataplani.TB_TIPO_ORGANO_CARGO tipoOrgCar,
+		qprodataplani.TB_CARGO_CLASIF_ESTRUCT cce,
+		qprodataplani.TB_CARGO_CLASIFICADOR cc,
+		qprodataplani.TB_CARGO_ESTRUCTURAL ce, qprodataquipu.uni_dep ud
+		
+		where
+		cce.N_COD_CARGO_CLASIF=cc.C_CARCLA_COD and
+		cce.N_COD_CARGO_ESTR=ce.C_COD_CARGO_ESTR and
+		CIERRE.C_CC_EST_PLAZA !=1 AND
+		CIERRE.N_CC_ANIO=#anio# AND
+		CIERRE.C_COD_CARGO_CLASIF_ESTR = CCE.C_COD_CARGO_CLASIF_ESTR AND
+		cierre.C_CC_COD_PLAZA = plaServ.N_ID_PLAZA(+) and
+		plaServ.T_SER_COD = s.SER_COD (+) and
+		plaServ.T_SER_COD = se.SER_COD (+) and
+		plaServ.T_SER_COD = sif.SER_COD (+) and
+		se.SER_TIP_ACT = ts.COD_TIP_SER (+) and
+		plaServ.N_NUM_SEREST = se.NUM_SEREST (+) and
+		tipoOrgDep.N_COD_TIPO_ORGANO=tipoOrgCar.C_COD_TIPO_ORGANO and
+		CIERRE.UD_ID=tipoOrgDep.N_UD_ID and
+		CIERRE.UD_ID=UD.UD_ID AND 
+		ud.ud_id in(select dep.ud_id from qprodataquipu.uni_dep dep START WITH UD_ID =#udid# CONNECT BY PRIOR UD_ID=UD_PAD and ud_fec_cad is null)
+		
+		)
+		group by ofigeneral,t_abv_tipo_organo, t_des_tipo_organo, ud_dsc, carg_estruct, nombres, codigo,clasif, confianza, niv_remunerativo,GRUPO_OCUP
+		order by ofigeneral,t_abv_tipo_organo, t_des_tipo_organo, ud_dsc, carg_estruct, nombres, codigo,clasif,confianza, niv_remunerativo,GRUPO_OCUP
+	</select>
+
+</sqlMap>

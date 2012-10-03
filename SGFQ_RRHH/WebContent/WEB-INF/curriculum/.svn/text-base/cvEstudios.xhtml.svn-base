@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	
+	             
+			        <p:fieldset styleClass="ui-state-hover">
+			        <p:dataTable value="#{enviarCVController.cv.gradsAcads}" var="estudios" id="cvestudios">
+			        <p:column>
+			        <f:facet name="header"><h:outputText value="Nombre Univ./Inst."/>
+			        </f:facet>
+			        <h:outputText value="#{estudios.nombreUnivInst}"/>
+			        </p:column>
+			        <p:column>
+			        <f:facet name="header"><h:outputText value="Grado Academico"/>
+			        </f:facet>
+			        <h:outputText value="#{estudios.nivelAcadLogr}"/>
+			        </p:column>
+			        <p:column>
+			        <f:facet name="header"><h:outputText value="Nombre Estudio"/>
+			        </f:facet>
+			        <h:outputText value="#{estudios.estudiosUnivInst}"/>
+			        </p:column>
+			        <p:column>
+			        <f:facet name="header"><h:outputText value="Fecha de inicio"/>
+			        </f:facet>
+			        <h:outputText value="#{estudios.fechaIniEstudios}"/>
+			        </p:column>
+			        <p:column>
+			        <f:facet name="header"><h:outputText value="Fecha fin"/>
+			        </f:facet>
+			        <h:outputText value="#{estudios.fechaFinEstudios}"/>
+			        </p:column>
+			        </p:dataTable>
+			        </p:fieldset>
+
+	</ui:composition>
